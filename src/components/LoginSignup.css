@@ -1,0 +1,67 @@
+/* Increase the overall size of the form container */
+.container {
+    width: 500px; /* Increased width */
+    padding: 50px; /* Increased padding */
+    background: #ffffff; /* Keeping it white for a clean look, can be changed if needed */
+    border-radius: 10px; /* Slightly larger radius for a softer look */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More pronounced shadow for depth */
+}
+
+/* Update header styles for better visual hierarchy */
+.header .text {
+    font-size: 32px; /* Larger font size for the title */
+    color: #5A189A; /* A different shade of purple */
+}
+
+/* Input field adjustments for better spacing and readability */
+.input {
+    height: auto; /* Adjust height automatically based on content */
+    padding: 15px; /* More padding for a larger touch area */
+}
+
+.input input {
+    font-size: 18px; /* Larger font size for readability */
+}
+
+/* Modify button styles for a new color scheme and larger size */
+button {
+    padding: 15px 30px; /* Increase padding for a larger button */
+    font-size: 18px; /* Increase font size for readability */
+    border-radius: 8px; /* Rounded corners for the buttons */
+    display: flex; /* Enables flexbox */
+    align-items: center; /* Vertically centers the content */
+    justify-content: center; /* Horizontally centers the content */
+    border: none; /* Removes the border */
+    cursor: pointer; /* Changes the cursor on hover */
+    outline: none; /* Removes the outline */
+    width: 100%; /* Makes the button stretch to the full width of its container */
+    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+}
+
+/* Login button with a new color */
+.login-button {
+    background-color: #9D4EDD; /* New purple shade */
+    color: white; /* White text for contrast */
+}
+
+/* Sign Up button with a complementary color */
+.signup-button {
+    background-color: #E0AAFF; /* Lighter purple for differentiation */
+    color: white; /* White text for contrast */
+}
+
+/* Forgot password link with a subtle color */
+.forgot-password {
+    color: #B985F4; /* Softer purple for the 'Forgot password?' link */
+    margin-top: 10px; /* Additional margin for spacing */
+}
+
+/* Hover effects for buttons for interactivity */
+button:hover {
+    filter: brightness(90%); /* Darken button color on hover for feedback */
+}
+
+.submit {
+    padding-left: 10px; /* Adjust the value as needed */
+    /* ... other styles ... */
+}
