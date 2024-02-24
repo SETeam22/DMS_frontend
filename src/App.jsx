@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Features from './components/Features.jsx';
 import Home from './pages/Home.jsx';
+import Service from './pages/Service.jsx';
 
 //import Header from './components/Header.jsx'; // Assuming you have a Header component
 import Hero  from './components/Hero.jsx';
@@ -19,7 +20,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={< Home />} />
           <Route path="/SignIn" element={<LoginSignup />} />
-          <Route path="/service" element={<service />} />
+          <Route path="/service" element={<Service />} />
           {/* <Route path="/welcome" element={<Welcome />} /> */}
           
           
