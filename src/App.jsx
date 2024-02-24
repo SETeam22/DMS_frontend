@@ -1,15 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import Features from './components/Features.jsx';
 import Home from './pages/Home.jsx';
 import Service from './pages/Service.jsx';
-
-//import Header from './components/Header.jsx'; // Assuming you have a Header component
-import Hero  from './components/Hero.jsx';
-import Navigation from './components/Navigation.jsx';
+import OrderForm from './components/OrderForm.jsx';
 import LoginSignup from './components/LoginSignup.jsx';
-import Welcome from './pages/Welcome.jsx';
 
 import Chatbot from './components/ChatBot.jsx';
 
@@ -21,6 +16,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/SignIn" element={<LoginSignup />} />
           <Route path="/service" element={<Service />} />
+          <Route path="/order" element={<OrderForm />} />
         </Routes>
       </GoogleOAuthProvider>
       <Chatbot /> {/* Add the chatbot to your app */}
