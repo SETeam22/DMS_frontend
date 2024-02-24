@@ -11,23 +11,19 @@ import Navigation from './components/Navigation.jsx';
 import LoginSignup from './components/LoginSignup.jsx';
 import Welcome from './pages/Welcome.jsx';
 
+import Chatbot from './components/ChatBot.jsx';
+
 const App = () => {
   return (
-  
     <BrowserRouter>
-      {/* <div className="bg-black"><Navigation /></div> */}
       <GoogleOAuthProvider clientId="263174241117-n1j7q8eqn323sr1s0p3i6t637589c8um.apps.googleusercontent.com">
         <Routes>
-          <Route path="/" element={< Home />} />
+          <Route path="/" element={<Home />} />
           <Route path="/SignIn" element={<LoginSignup />} />
           <Route path="/service" element={<Service />} />
-          {/* <Route path="/welcome" element={<Welcome />} /> */}
-          
-          
-          
-          {/* Other routes */}
         </Routes>
       </GoogleOAuthProvider>
+      <Chatbot /> {/* Add the chatbot to your app */}
     </BrowserRouter>
   );
 };
