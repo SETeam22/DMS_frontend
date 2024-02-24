@@ -11,7 +11,7 @@ const Navigationbar = () => {
     const handleClick = () => setClick(!click);
 
     const content = (
-        <div className='lg:hidden block absolute top-16 w-full left-0 right-0 bg-slate-900 transition'>
+        <div className='lg:hidden block absolute top-16 w-full left-0 right-0 bg-black transition'>
             <ul className='text-center text-xl p-20'>
                 <Link spy={true} smooth={true} duration={500} to="Home" offset={-70}>
                     <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Home</li>
@@ -22,6 +22,11 @@ const Navigationbar = () => {
                 <Link spy={true} smooth={true} duration={500} to="Contact" offset={-70}>
                     <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Contact</li>
                 </Link>
+                <RouterLink to="/service">
+                    <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>
+                        Services
+                    </li>
+                </RouterLink>
                 {/* <Link spy={true} smooth={true} duration={500} to="SignIn" offset={-70}>
                     <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Sign In</li>
                 </Link> */}
@@ -49,6 +54,11 @@ const Navigationbar = () => {
                         <Link spy={true} smooth={true} duration={500} to="About" offset={-70}>
                             <li className='hover:text-[#00df9a] transition border-b-2 border-slate-900 p-4 hover:border-[#00df9a] cursor-pointer'>About</li>
                         </Link>
+                        <RouterLink to="/service">
+                        <li className='hover:text-[#00df9a] transition border-b-2 border-slate-900 p-4 hover:border-[#00df9a] cursor-pointer'>
+                            Services
+                        </li>
+                        </RouterLink>
                         <Link spy={true} smooth={true} duration={500} to="Contact" offset={-70}>
                             <li className='hover:text-[#00df9a] transition border-b-2 border-slate-900 p-4 hover:border-[#00df9a] cursor-pointer'>Contact</li>
                         </Link>
