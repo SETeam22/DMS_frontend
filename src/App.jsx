@@ -11,6 +11,10 @@ import Chatbot from './components/ChatBot.jsx';
 import Drivers from './pages/Drivers.jsx'
 import NewEmp from './pages/NewEmp.jsx';
 import MapView from './pages/MapView.jsx';
+import LoginForm from './pages/LoginForm.jsx';
+import Signup from './pages/Signup.jsx';
+import Forgotpass from './pages/Forgotpass.jsx';
+import AdminLogin from './pages/AdminLogin.jsx';
 
 const App = () => {
   return (
@@ -26,6 +30,10 @@ const App = () => {
           <Route path="/Employees" element={<Drivers />} />
           <Route path="/new" element={<NewEmp />} />
           <Route path="/map" element={<MapView />} />
+          <Route path="/Login" element={<LoginForm />} />
+          <Route path='/Register' element={<Signup />} />
+          <Route path='/Forgotpass' element={<Forgotpass />} />
+          <Route path='/AdminLogin' element={<AdminLogin />} />
 
         </Routes>
       </GoogleOAuthProvider>
