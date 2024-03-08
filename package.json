@@ -11,13 +11,20 @@
   },
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.10.1",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/icons-material": "^5.15.11",
+    "@mui/material": "^5.15.11",
+    "@mui/x-data-grid": "^6.19.5",
     "@react-oauth/google": "^0.12.1",
     "flowbite-react": "^0.7.2",
+    "leaflet": "^1.9.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
+    "react-leaflet": "^4.2.1",
     "react-router-dom": "^6.22.0",
     "react-scroll": "^1.9.0",
     "react-typed": "^2.0.12"
@@ -33,6 +40,6 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.34",
     "tailwindcss": "^3.4.1",
-    "vite": "^5.0.8"
+    "vite": "^5.1.4"
   }
 }
