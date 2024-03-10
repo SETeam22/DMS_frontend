@@ -46,7 +46,7 @@ const Navigationbar = () => {
                     <Link spy={true} smooth={true} duration={500} to="About" offset={-70} className={navLinkClass}>About</Link>
                     <RouterLink to="/service" className={navLinkClass}>Services</RouterLink>
                     <Link spy={true} smooth={true} duration={500} to="Contact" offset={-70} className={navLinkClass}>Contact</Link>
-                    <RouterLink to="/signin" className={navLinkClass}>Sign In</RouterLink>
+                    <RouterLink to="/authentication" className={navLinkClass}>Sign In</RouterLink>
                 </ul>
                 <div className='lg:hidden block' onClick={handleClick}>
                     {click ? <FaTimes size={20} color="white" /> : <CgMenu size={20} color="white" />}
