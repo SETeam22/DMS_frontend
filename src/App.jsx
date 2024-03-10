@@ -11,6 +11,7 @@ import Chatbot from './components/ChatBot.jsx';
 import Drivers from './pages/Drivers.jsx'
 import NewEmp from './pages/NewEmp.jsx';
 import MapView from './pages/MapView.jsx';
+import VerifyUser from './pages/VerifyUser.tsx';
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
       <GoogleOAuthProvider clientId="263174241117-n1j7q8eqn323sr1s0p3i6t637589c8um.apps.googleusercontent.com">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<LoginSignup />} />
+          <Route path="/authentication" element={<LoginSignup />} />
           <Route path="/service" element={<Service />} />
           <Route path="/order" element={<OrderForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -26,7 +27,7 @@ const App = () => {
           <Route path="/employees" element={<Drivers />} />
           <Route path="/new" element={<NewEmp />} />
           <Route path="/map" element={<MapView />} />
-
+          <Route path="/verification" element={<VerifyUser />} />
         </Routes>
       </GoogleOAuthProvider>
       <Chatbot /> {/* Add the chatbot to your app */}
