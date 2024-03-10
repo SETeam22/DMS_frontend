@@ -116,7 +116,8 @@ const LoginSignup = () => {
   
     if (response.ok) {
       setSignedUpUsername(username); // Set the signed-up username
-      navigate('/welcome', { state: { username } }); // Pass username as state
+      //navigate('/welcome', { state: { username } }); // Pass username as state
+      navigate('/verification', { state: { email } }); // Pass username as state
     } else {
       // Handle errors
       console.error('Signup failed');
@@ -218,7 +219,7 @@ const LoginSignup = () => {
 
           <div className="input flex items-center space-x-2">
             <img src={email_icon} alt="" />
-            <input type="email" placeholder="Email Id" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="email" placeholder="Email" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
 
           <div className="input flex items-center space-x-2">
