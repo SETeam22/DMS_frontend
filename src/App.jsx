@@ -12,6 +12,8 @@ import Drivers from './pages/Drivers.jsx'
 import NewEmp from './pages/NewEmp.jsx';
 import MapView from './pages/MapView.jsx';
 import VerifyUser from './pages/VerifyUser.tsx';
+import User from './pages/user.jsx'
+import Addservice from './pages/Addservice.jsx'
 
 const App = () => {
   return (
@@ -26,8 +28,10 @@ const App = () => {
           <Route path="/orders" element={<Orders />} />
           <Route path="/employees" element={<Drivers />} />
           <Route path="/new" element={<NewEmp />} />
+          <Route path="/user" element={<User />} />
           <Route path="/map" element={<MapView />} />
           <Route path="/verification" element={<VerifyUser />} />
+          <Route path="/addservice" element={<Addservice />} />
         </Routes>
       </GoogleOAuthProvider>
       <Chatbot /> {/* Add the chatbot to your app */}
