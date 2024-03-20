@@ -14,6 +14,7 @@ import MapView from './pages/MapView.jsx';
 import VerifyUser from './pages/VerifyUser.tsx';
 import User from './pages/user.jsx'
 import Addservice from './pages/Addservice.jsx'
+import ResetPassword from './pages/ResetPassword.jsx';
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/map" element={<MapView />} />
           <Route path="/verification" element={<VerifyUser />} />
           <Route path="/addservice" element={<Addservice />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
         </Routes>
       </GoogleOAuthProvider>
       <Chatbot /> {/* Add the chatbot to your app */}

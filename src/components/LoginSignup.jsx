@@ -116,7 +116,7 @@ const LoginSignup = () => {
   
     if (signupResponse.ok) {
       setSignedUpUsername(username); // Set the signed-up username
-      
+
       // Call the sendOTP API
       const otpResponse = await fetch('http://localhost:3000/api/auth/sendotp', {
         method: 'POST',
@@ -133,7 +133,7 @@ const LoginSignup = () => {
         const { otp } = otpData;
         sessionStorage.setItem('otp', otp);  // Storing the OTP for later verification, consider security implications
   
-        navigate('/verification', { state: { email } }); // Navigate to verification page
+        navigate('/verification', { state: { email, username } }); // Navigate to verification page
       } else {
         console.error('OTP sending failed');
         // Handle OTP sending failure

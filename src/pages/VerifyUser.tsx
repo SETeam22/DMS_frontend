@@ -34,7 +34,7 @@ const VerifyUser = () => {
                     <div>
                         <form action="" method="post">
                             <div className="flex flex-col space-y-16">
-                            <OTPInput length={5} onComplete={handleSubmit} />
+                            <OTPInput length={5} username={state.username} onComplete={handleSubmit} />
                                 <div className="flex flex-col space-y-5">
                                     {/* <div>
                                         <button

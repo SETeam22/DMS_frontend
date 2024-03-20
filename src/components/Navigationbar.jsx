@@ -27,7 +27,7 @@ const Navigationbar = () => {
                         Services
                     </li>
                 </RouterLink>
-                <RouterLink to="/signin">
+                <RouterLink to="/authentication">
                     <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>
                         SignIn
                     </li>
