@@ -5,7 +5,7 @@ type InputProps = {
   length?: number;
 };
 
-const OTPInput = ({ length = 6 }: InputProps) => {
+const OTPInput = ({ length = 6, username }: InputProps) => {
   const navigate = useNavigate();
   const inputRef = useRef<(HTMLInputElement | null)[]>(Array(length).fill(null));
   const [OTP, setOTP] = useState<string[]>(Array(length).fill(''));
@@ -28,7 +28,7 @@ const OTPInput = ({ length = 6 }: InputProps) => {
 
       if (enteredOTP === storedOTP) {
         alert('OTP verified successfully!');
-        navigate('/service');
+        navigate('/resetpassword', { state: { username } });
       } else {
         alert('Incorrect OTP, please try again.');
       }
