@@ -35,10 +35,10 @@ const LoginForm = () => {
     console.log('User Type:', userType);
   };
 
-  const handleGoogleRegister = () => {
-    // Placeholder for Google OAuth integration
-    console.log('Register with Google');
-  };
+  // const handleGoogleRegister = () => {
+  //   // Placeholder for Google OAuth integration
+  //   console.log('Register with Google');
+  // };
 
   return (
     

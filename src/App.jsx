@@ -15,6 +15,8 @@ import LoginForm from './pages/LoginForm.jsx';
 import Signup from './pages/Signup.jsx';
 import Forgotpass from './pages/Forgotpass.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
+import PlaceDeliveryForm from './pages/PlaceDeliveryForm.jsx';
+
 
 const App = () => {
   return (
@@ -34,6 +36,8 @@ const App = () => {
           <Route path='/Register' element={<Signup />} />
           <Route path='/Forgotpass' element={<Forgotpass />} />
           <Route path='/AdminLogin' element={<AdminLogin />} />
+          <Route path='/form' element={<PlaceDeliveryForm />} />
+
 
         </Routes>
       </GoogleOAuthProvider>
@@ -42,4 +46,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default App; 

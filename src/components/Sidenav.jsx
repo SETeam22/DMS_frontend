@@ -34,13 +34,13 @@ const Sidenav = () => {
           <Link to="/Employees" style={{ textDecoration: "none" }}>
             <li className='flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2'> 
               <PersonOutlineIcon className="text-base text-[#00df9a]" />
-              <span className="text-sm font-semibold text-gray-600 ml-2.5">Employees</span>
+              <span className="text-sm font-semibold text-gray-600 ml-2.5">Drivers</span>
             </li>
           </Link>
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/service" style={{ textDecoration: "none" }}>
             <li className='flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2'>
               <StoreIcon className="text-base text-[#00df9a]" />
-              <span className="text-sm font-semibold text-gray-600 ml-2.5">Products</span>
+              <span className="text-sm font-semibold text-gray-600 ml-2.5">Services</span>
             </li>
           </Link>
           <Link to="/Orders" style={{ textDecoration: "none" }}>

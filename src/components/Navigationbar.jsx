@@ -27,6 +27,11 @@ const Navigationbar = () => {
                         Services
                     </li>
                 </RouterLink>
+                <RouterLink to="/form">
+                    <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>
+                        Place Order
+                    </li>
+                </RouterLink>
                 <RouterLink to="/Login">
                     <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>
                         SignIn
@@ -45,6 +50,7 @@ const Navigationbar = () => {
                     <Link spy={true} smooth={true} duration={500} to="Home" offset={-70} className={navLinkClass}>Home</Link>
                     <Link spy={true} smooth={true} duration={500} to="About" offset={-70} className={navLinkClass}>About</Link>
                     <RouterLink to="/service" className={navLinkClass}>Services</RouterLink>
+                    <RouterLink to="/form" className={navLinkClass}>Place Order</RouterLink>
                     <Link spy={true} smooth={true} duration={500} to="Contact" offset={-70} className={navLinkClass}>Contact</Link>
                     <RouterLink to="/Login" className={navLinkClass}>Sign In</RouterLink>
                 </ul>
