@@ -1,7 +1,7 @@
 // PastOrders.jsx
 
 import React from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 
 const PastOrders = () => {
   const pastOrders = [
@@ -10,11 +10,11 @@ const PastOrders = () => {
       status: "Delivered",
       deliveryService: "FedEx",
       deliveryDate: "March 15, 2024",
-      
       items: [
         { name: "Product 1", quantity: 2 },
         { name: "Product 2", quantity: 1 }
-      ]
+      ],
+      price: 100
     },
     {
       orderId: "2",
@@ -24,7 +24,8 @@ const PastOrders = () => {
       items: [
         { name: "Product 3", quantity: 1 },
         { name: "Product 4", quantity: 3 }
-      ]
+      ],
+      price: 120
     },
     {
       orderId: "3",
@@ -34,7 +35,8 @@ const PastOrders = () => {
       items: [
         { name: "Product 5", quantity: 2 },
         { name: "Product 6", quantity: 1 }
-      ]
+      ],
+      price: 80
     },
     {
       orderId: "4",
@@ -44,7 +46,8 @@ const PastOrders = () => {
       items: [
         { name: "Product 7", quantity: 3 },
         { name: "Product 8", quantity: 2 }
-      ]
+      ],
+      price: 60
     },
     {
       orderId: "5",
@@ -54,15 +57,16 @@ const PastOrders = () => {
       items: [
         { name: "Product 9", quantity: 1 },
         { name: "Product 10", quantity: 1 }
-      ]
-    },
+      ],
+      price: 150
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-green-100 flex flex-col"> 
+    <div className="min-h-screen bg-green-100 flex flex-col">
       <div className="container mx-auto p-4">
-        <Link to="/" className="text-blue-600 text-sm mb-4">Home</Link>
-        <h1 className="text-3xl font-bold mb-8 text-center">Past Orders</h1> 
+        <Link to="/" style={{ position: 'absolute', top: '20px', left: '20px', padding: '8px 12px', backgroundColor: '#28a745', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Home</Link>
+        <h1 className="text-3xl font-bold mb-8 text-center">Past Orders</h1>
         {pastOrders.map((order, index) => (
           <div key={index} className="max-w-lg mx-auto mb-6 bg-gray-100 rounded-lg shadow-md p-8 text-black">
             <h2 className="text-2xl font-bold mb-4">Order {order.orderId}</h2>
@@ -70,6 +74,7 @@ const PastOrders = () => {
               <p className="font-semibold">Status: {order.status}</p>
               <p className="font-semibold">Delivery Service: {order.deliveryService}</p>
               <p className="font-semibold">Delivery Date: {order.deliveryDate}</p>
+              <p className="font-semibold">Price: ${order.price}</p>
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-2">Items</h3>
