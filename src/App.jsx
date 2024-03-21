@@ -15,6 +15,10 @@ import VerifyUser from './pages/VerifyUser.tsx';
 import User from './pages/user.jsx'
 import Addservice from './pages/Addservice.jsx'
 import ResetPassword from './pages/ResetPassword.jsx';
+import UserProfile from './pages/UserProfile.jsx'; 
+import TrackOrder from './pages/TrackOrder.jsx'; 
+import PastOrders from './pages/PastOrders.jsx';
+import SubmitReview from './pages/SubmitReview.jsx';
 
 const App = () => {
   return (
@@ -34,9 +38,13 @@ const App = () => {
           <Route path="/verification" element={<VerifyUser />} />
           <Route path="/addservice" element={<Addservice />} />
           <Route path="/resetpassword" element={<ResetPassword />} />
+          <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/track-orders" element={<TrackOrder />} />
+          <Route path="/past-orders" element={<PastOrders />} />
+          <Route path="/submit-reviews" element={<SubmitReview />} />
         </Routes>
       </GoogleOAuthProvider>
-      <Chatbot /> {/* Add the chatbot to your app */}
+      <Chatbot /> 
     </BrowserRouter>
   );
 };
