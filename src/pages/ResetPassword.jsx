@@ -34,7 +34,7 @@ const ResetPassword = () => {
         const hashedPassword = await bcryptjs.hashSync(confirmPassword, 10); 
     
         try {
-            const response = await fetch('http://localhost:3000/api/auth/change-password', {
+            const response = await fetch('http://localhost:4000/api/auth/change-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

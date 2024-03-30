@@ -99,7 +99,7 @@ const LoginSignup = () => {
     };
     
     console.log("Sending request to /api/auth/signup with data:", requestData);
-    const signupResponse = await fetch('http://localhost:3000/api/auth/signup', {
+    const signupResponse = await fetch('http://localhost:4000/api/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -118,7 +118,7 @@ const LoginSignup = () => {
       setSignedUpUsername(username); // Set the signed-up username
 
       // Call the sendOTP API
-      const otpResponse = await fetch('http://localhost:3000/api/auth/sendotp', {
+      const otpResponse = await fetch('http://localhost:4000/api/auth/sendotp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -146,7 +146,7 @@ const LoginSignup = () => {
   
 
   const handleSignIn = async () => {
-    const response = await fetch('http://localhost:3000/api/auth/signin', {
+    const response = await fetch('http://localhost:4000/api/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
