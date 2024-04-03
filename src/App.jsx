@@ -11,6 +11,7 @@ import Chatbot from './components/ChatBot.jsx';
 import Drivers from './pages/Drivers.jsx'
 import NewEmp from './pages/NewEmp.jsx';
 import MapView from './pages/MapView.jsx';
+
 import VerifyUser from './pages/VerifyUser.tsx';
 import User from './pages/user.jsx'
 import Addservice from './pages/Addservice.jsx'
@@ -19,6 +20,14 @@ import UserProfile from './pages/UserProfile.jsx';
 import TrackOrder from './pages/TrackOrder.jsx'; 
 import PastOrders from './pages/PastOrders.jsx';
 import SubmitReview from './pages/SubmitReview.jsx';
+
+import LoginForm from './pages/LoginForm.jsx';
+import Signup from './pages/Signup.jsx';
+import Forgotpass from './pages/Forgotpass.jsx';
+import AdminLogin from './pages/AdminLogin.jsx';
+import PlaceDeliveryForm from './pages/PlaceDeliveryForm.jsx';
+
+
 
 const App = () => {
   return (
@@ -42,6 +51,13 @@ const App = () => {
           <Route path="/track-orders" element={<TrackOrder />} />
           <Route path="/past-orders" element={<PastOrders />} />
           <Route path="/submit-reviews" element={<SubmitReview />} />
+          
+          <Route path="/Login" element={<LoginForm />} />
+          <Route path='/Register' element={<Signup />} />
+          <Route path='/Forgotpass' element={<Forgotpass />} />
+          <Route path='/AdminLogin' element={<AdminLogin />} />
+          <Route path='/form' element={<PlaceDeliveryForm />} />
+
         </Routes>
       </GoogleOAuthProvider>
       <Chatbot /> 
@@ -49,4 +65,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default App; 

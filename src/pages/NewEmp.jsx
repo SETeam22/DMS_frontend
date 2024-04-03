@@ -22,7 +22,11 @@ const NewEmp = () => {
       <Sidenav />
       <div className='flex-grow p-8'>
         <div className='max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md'>
-          <h2 className='text-2xl font-semibold mb-6'>Assign Employee</h2>
+
+          {/* <h2 className='text-2xl font-semibold mb-6'>Assign Employee</h2> */}
+
+          <h2 className='text-2xl font-semibold mb-6'>Add Driver</h2>
+
           <form onSubmit={handleSubmit} className='grid grid-cols-2 gap-4'>
             <div className='col-span-2'>
               <label className='block text-gray-700 text-sm font-semibold mb-2'>Name</label>
