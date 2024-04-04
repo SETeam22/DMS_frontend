@@ -4,17 +4,6 @@
 import React, { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
-import Dashboard from '../pages/Dashboard'
-import { FiLock } from 'react-icons/fi';
-import { FaUser } from 'react-icons/fa'; // For user icon
-import { AiOutlineMail } from 'react-icons/ai'; // For email icon
-import { RiShieldKeyholeLine } from 'react-icons/ri'; // For security icon
-import { BiUserCircle } from 'react-icons/bi'; // For user type icon
-
-
-import user_icon from '../assets/person.png';
-import email_icon from '../assets/email.png';
-import password_icon from '../assets/password.png';
 
 
 const LoginSignup = () => {
@@ -35,8 +24,6 @@ const LoginSignup = () => {
 
   const [actualSecurityAnswer, setActualSecurityAnswer] = useState('');
   const [userSecurityAnswer, setUserSecurityAnswer] = useState('');
-
-
   const handleSignUp = async () => {
     const requestData = {
       username,
@@ -59,6 +46,7 @@ const LoginSignup = () => {
         password,
         securityQuestion,
         securityAnswer,  
+        userType
       })
     }); 
     {/*try {
@@ -215,4 +203,4 @@ const LoginSignup = () => {
   );
 };
 
-export default LoginForm;
+export default LoginSignup;
