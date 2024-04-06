@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import DeliveryImg from '../assets/door-to-door-delivery-flat-deliveryman-courier-vector-29765876.jpg';
-
+import ReCAPTCHA from "react-google-recaptcha";
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
+  const [captchaValue, setCaptchaValue] = useState(null);
 
   
   const handleGoogleRegister = () => {
@@ -34,8 +35,17 @@ const Signup = () => {
     setSecurityAnswer(e.target.value);
   };
 
+  const handleCaptchaChange = (value) => {
+    console.log("Captcha value:", value);
+    setCaptchaValue(value); // Add this line
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!captchaValue) {
+      alert("Please verify you are not a robot.");
+      return;
+    }
     // Add your registration logic here
     console.log('Name:', name);
     console.log('Email:', email);
@@ -75,6 +85,10 @@ const Signup = () => {
               {/* Add more security questions as needed */}
             </select>
             <input className="p-2 mt-4 rounded-xl border" type="text" name="securityAnswer" placeholder="Security Question Answer" value={securityAnswer} onChange={handleSecurityAnswerChange} />
+            <ReCAPTCHA
+              sitekey="6LfPz68pAAAAANLP2PNC_3J5fU4H9sFtw5j0LYoE"
+              onChange={handleCaptchaChange}
+            />
             <button type="submit" className="bg-[#00df9a] rounded-xl text-white py-2 hover:scale-105 duration-300 mt-4">Register</button>
           </form>
         </div>

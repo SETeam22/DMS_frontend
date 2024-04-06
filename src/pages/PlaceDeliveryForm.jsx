@@ -75,6 +75,7 @@ const PlaceDeliveryForm = () => {
 export default PlaceDeliveryForm; */}
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const OrderForm = () => {
   const [order, setOrder] = useState({
@@ -85,7 +86,7 @@ const OrderForm = () => {
     orderItems: [{ itemName: '', quantity: '', price: '' }]
   });
   const [orderConfirmation, setOrderConfirmation] = useState(null);
-
+  const navigate = useNavigate();
   // Handle input changes for customer details
   const handleInputChange = (e) => {
     setOrder({ ...order, [e.target.name]: e.target.value });
@@ -126,8 +127,12 @@ const OrderForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(order)
       });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
       const data = await response.json();
-      setOrderConfirmation(data);
+      //setOrderConfirmation(data);
+      navigate('/payment', { state: { order: data } });
     } catch (error) {
       console.error('Error placing order:', error);
     }

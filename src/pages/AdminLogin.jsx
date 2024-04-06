@@ -66,11 +66,19 @@ export default AdminLogin; */}
 import React, { useState } from 'react';
 import DeliveryImg from '../assets/door-to-door-delivery-flat-deliveryman-courier-vector-29765876.jpg';
 import { useNavigate } from 'react-router-dom';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const AdminLoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('admin'); // Default role
+  const [captchaValue, setCaptchaValue] = useState(null);
+
+  const handleCaptchaChange = (value) => {
+    console.log("Captcha value:", value);
+    setCaptchaValue(value); // Add this line
+  };
+
   
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -88,6 +96,10 @@ const AdminLoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!captchaValue) {
+      alert("Please verify you are not a robot.");
+      return;
+    }
 
     // Predefined credentials for admin and delivery manager
     const credentials = {
@@ -133,11 +145,15 @@ const AdminLoginForm = () => {
             </div>
             <input className="p-2 mt-8 rounded-xl border" type="email" name="email" placeholder="Email" value={email} onChange={handleEmailChange} />
             <input className="p-2 mt-4 rounded-xl border w-full" type="password" name="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
+            <ReCAPTCHA
+              sitekey="6LfPz68pAAAAANLP2PNC_3J5fU4H9sFtw5j0LYoE"
+              onChange={handleCaptchaChange}
+            />
             <button type="submit" className="bg-[#00df9a] rounded-xl text-white py-2 mt-4 hover:scale-105 duration-300">Login</button>
           </form>
         </div>
 
-        <div className="md:block hidden w-1/2">
+        <div className="md:block hidden w-1/2 pl-5">
           <img className="rounded-2xl" src={DeliveryImg} alt="Login" />
         </div>
       </div>
