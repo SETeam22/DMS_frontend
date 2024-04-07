@@ -26,7 +26,7 @@ import Signup from './pages/Signup.jsx';
 import Forgotpass from './pages/Forgotpass.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
 import PlaceDeliveryForm from './pages/PlaceDeliveryForm.jsx';
-
+import Faq from './pages/Faq.jsx';
 
 
 const App = () => {
@@ -57,6 +57,7 @@ const App = () => {
           <Route path='/Forgotpass' element={<Forgotpass />} />
           <Route path='/AdminLogin' element={<AdminLogin />} />
           <Route path='/form' element={<PlaceDeliveryForm />} />
+          <Route path="/faq" element={<Faq />} />
 
         </Routes>
       </GoogleOAuthProvider>

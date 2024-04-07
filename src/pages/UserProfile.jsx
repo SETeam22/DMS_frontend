@@ -1,4 +1,16 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+const HelpButton = () => {
+  return (
+    <Link
+      to="/faq"
+      className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-auto"
+    >
+      Help
+    </Link>
+  );
+};
 
 const UserProfile = () => {
   const [editing, setEditing] = useState(false);
@@ -50,9 +62,12 @@ const UserProfile = () => {
 
   return (
     <div className="bg-green-100">
+      <div className="container mx-auto p-4 flex justify-between items-center">
+        <h2 className="text-2xl font-bold mx-auto">User Profile</h2> 
+        <HelpButton />
+      </div>
       <div className="container mx-auto p-4">
         <div className="max-w-lg mx-auto bg-white rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-bold mb-4">User Profile</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-gray-700">First Name:</p>
