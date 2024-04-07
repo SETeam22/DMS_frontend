@@ -3,12 +3,14 @@ import DeliveryImg from '../assets/door-to-door-delivery-flat-deliveryman-courie
 import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { Link } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('user'); 
+  const [captchaValue, setCaptchaValue] = useState(null);
   
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -26,9 +28,17 @@ const LoginForm = () => {
   const navigateToSearch = () => {
     navigate('/Register'); 
   };
+  const handleCaptchaChange = (value) => {
+    console.log("Captcha value:", value);
+    setCaptchaValue(value); // Add this line
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!captchaValue) {
+      alert("Please verify you are not a robot.");
+      return;
+    }
     // Add your login logic here
     console.log('Email:', email);
     console.log('Password:', password);
@@ -69,6 +79,10 @@ const LoginForm = () => {
               <input className="p-2 rounded-xl border w-full" type="password" name="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
               
             </div>
+            <ReCAPTCHA
+              sitekey="6LfPz68pAAAAANLP2PNC_3J5fU4H9sFtw5j0LYoE"
+              onChange={handleCaptchaChange}
+            />
             <button type="submit" className="bg-[#00df9a] rounded-xl text-white py-2 hover:scale-105 duration-300">Login</button>
           </form>
 
@@ -108,7 +122,7 @@ const LoginForm = () => {
         </div>
 
         {/* image */}
-        <div className="md:block hidden w-1/2">
+        <div className="md:block hidden w-1/2 pl-5">
           <img className="rounded-2xl" src={DeliveryImg} alt="Login" />
         </div>
       </div>
