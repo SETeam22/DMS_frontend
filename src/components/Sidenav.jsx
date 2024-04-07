@@ -1,4 +1,6 @@
+
 import React from 'react'
+
 
 import { useContext } from "react";
 import { Link } from "react-router-dom";
@@ -23,6 +25,7 @@ const Sidenav = () => {
       <div className="flex-grow p-2.5">
         <ul className="list-none m-0 p-0">
         <Link to="/Dashboard" style={{ textDecoration: "none" }}>
+
           {/* <p className="text-xs font-bold text-gray-600 mt-4 mb-2">MAIN</p> */}
           <li className="flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2">
             <DashboardIcon className="text-base text-[#00df9a]" />
@@ -30,7 +33,7 @@ const Sidenav = () => {
           </li>
           </Link>
           {/* ... other menu items ... */}
-          
+
           <Link to="/Employees" style={{ textDecoration: "none" }}>
             <li className='flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2'> 
               <PersonOutlineIcon className="text-base text-[#00df9a]" />
@@ -44,6 +47,7 @@ const Sidenav = () => {
             </li>
           </Link>
           <Link to="/Orders" style={{ textDecoration: "none" }}>
+
           <li className='flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2'>
             <CreditCardIcon className="text-base text-[#00df9a]" />
             <span className="text-sm font-semibold text-gray-600 ml-2.5">Orders</span>

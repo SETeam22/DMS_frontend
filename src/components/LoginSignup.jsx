@@ -4,12 +4,7 @@
 import React, { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
-import Dashboard from '../pages/Dashboard'
 
-
-import user_icon from '../assets/person.png';
-import email_icon from '../assets/email.png';
-import password_icon from '../assets/password.png';
 
 const LoginSignup = () => {
   const [action, setAction] = useState('Login');
@@ -27,8 +22,20 @@ const LoginSignup = () => {
     "In what city were you born?",
   ];
 
+  const [actualSecurityAnswer, setActualSecurityAnswer] = useState('');
+  const [userSecurityAnswer, setUserSecurityAnswer] = useState('');
   const handleSignUp = async () => {
-    const response = await fetch('http://localhost:3000/api/auth/signup', {
+    const requestData = {
+      username,
+      email,
+      password,
+      securityQuestion,
+      securityAnswer,  
+      userType
+    };
+    
+    console.log("Sending request to /api/auth/signup with data:", requestData);
+    const signupResponse = await fetch('http://localhost:4000/api/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -38,7 +45,8 @@ const LoginSignup = () => {
         email,
         password,
         securityQuestion,
-        securityAnswer,        
+        securityAnswer,  
+        userType
       })
     }); 
     {/*try {
@@ -56,12 +64,33 @@ const LoginSignup = () => {
       }); */}
 
   
-    if (response.ok) {
+    if (signupResponse.ok) {
       setSignedUpUsername(username); // Set the signed-up username
-      navigate('/welcome', { state: { username } }); // Pass username as state
+
+      // Call the sendOTP API
+      const otpResponse = await fetch('http://localhost:4000/api/auth/sendotp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+      });
+  
+      if (otpResponse.ok) {
+        const otpData = await otpResponse.json();
+        // Assuming the OTP is returned in the response for testing, store it for verification
+        // In a real-world application, the OTP should be verified on the server side
+        const { otp } = otpData;
+        sessionStorage.setItem('otp', otp);  // Storing the OTP for later verification, consider security implications
+  
+        navigate('/verification', { state: { email, username } }); // Navigate to verification page
+      } else {
+        console.error('OTP sending failed');
+        // Handle OTP sending failure
+      }
     } else {
-      // Handle errors
       console.error('Signup failed');
+
     } 
     {/*if (response.ok) {
       const data = await response.json();
@@ -74,122 +103,78 @@ const LoginSignup = () => {
       }
     } else {
       console.error('Login failed');
+
     }
   } catch (error) {
     console.error('There was a problem with the login request:', error);
   } */}
   };
+  
 
+  const handleSignIn = async () => {
+    const response = await fetch('http://localhost:4000/api/auth/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        userType      
+      })
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      if (userType === 'admin') {
+        navigate('/dashboard', { state: { email } });
+      } else {
+        // Set the security question and answer from the response
+        setSecurityQuestion(data.securityQuestion);
+        setActualSecurityAnswer(data.securityAnswer);
+        // Trigger modal/dialog or redirect to a screen to ask for the security answer
+        // For simplicity, we assume it's a prompt in this example
+        const userAnswer = prompt(`Security Question: ${data.securityQuestion}`);
+        setUserSecurityAnswer(userAnswer);
+
+        if (userAnswer === data.securityAnswer) {
+          navigate('/service', { state: { email } }); // Redirect to homepage on successful verification
+        } else {
+          alert('Security answer is incorrect.');
+        }
+      }
+    } else {
+      console.error('Login failed');
+    }
+  };
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <div className="container w-96 p-12 bg-white rounded-lg shadow-md">
-        <div className="header mb-6">
-          <div className="text text-3xl font-semibold text-purple-700">{action}</div>
-          <div className="underline h-1 bg-purple-700 mt-2"></div>
-        </div>
-        <div className="inputs space-y-4">
+    
+    <section className="bg-gray-50 min-h-screen flex items-center justify-center">
+      {/* login container */}
+      <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
+        {/* form */}
+        <div className="md:w-1/2 px-8 md:px-16">
+          <h2 className="font-bold text-2xl text-[#00df9a]">Login</h2>
+          <p className="text-xs mt-4 text-[#00df9a]">If you are already a member, easily log in</p>
 
-        {/*{action === "Sign Up" && (
-            <>
-              <div className="input flex items-center space-x-2">
-                <img src={user_icon} alt="" />
-                <input type="text" placeholder="Name" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={username} onChange={(e) => setUsername(e.target.value)} />
-              </div>
-              <div className="input flex items-center space-x-2">
-                <img src={email_icon} alt="" />
-                <input type="email" placeholder="Email Id" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-              <div className="input flex items-center space-x-2">
-                <img src={password_icon} alt="" />
-                <input type="password" placeholder="Password" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={password} onChange={(e) => setPassword(e.target.value)} />
-              </div>
-              <div className="input flex items-center space-x-2">
-                <select
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  value={securityQuestion}
-                  onChange={(e) => setSecurityQuestion(e.target.value)}
-                >
-                  <option value="">Select a security question</option>
-                  {securityQuestions.map((question, index) => (
-                    <option key={index} value={question}>{question}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="input flex items-center space-x-2">
-                <input
-                  type="text"
-                  placeholder="Security Question Answer"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  value={securityAnswer}
-                  onChange={(e) => setSecurityAnswer(e.target.value)}
-                />
-              </div>
-            </>
-                  )}*/}
-          {action === "Login" ? null : (
-            <>
-            <div className="input flex items-center space-x-2">
-              <img src={user_icon} alt="" />
-              <input type="text" placeholder="Name" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <input className="p-2 mt-8 rounded-xl border" type="email" name="email" placeholder="Email" value={email} onChange={handleEmailChange} />
+            <div className="relative">
+              <input className="p-2 rounded-xl border w-full" type="password" name="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
+              
             </div>
-            
-            <div className="input flex items-center space-x-2">
-            <select
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              value={securityQuestion}
-              onChange={(e) => setSecurityQuestion(e.target.value)}
-            >
-              <option value="">Select a security question</option>
-              {securityQuestions.map((question, index) => (
-                <option key={index} value={question}>{question}</option>
-              ))}
-            </select>
-          </div>
-          <div className="input flex items-center space-x-2">
-            <input
-              type="text"
-              placeholder="Security Question Answer"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-              value={securityAnswer}
-              onChange={(e) => setSecurityAnswer(e.target.value)}
-            />
-          </div>
-          </>
-          )}
+            <button type="submit" className="bg-[#00df9a] rounded-xl text-white py-2 hover:scale-105 duration-300">Login</button>
+          </form>
 
-
-          <div className="input flex items-center space-x-2">
-            <img src={email_icon} alt="" />
-            <input type="email" placeholder="Email Id" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
+            <hr className="border-gray-400" />
+            <p className="text-center text-sm">OR</p>
+            <hr className="border-gray-400" />
           </div>
 
-          <div className="input flex items-center space-x-2">
-            <img src={password_icon} alt="" />
-            <input type="password" placeholder="Password" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-
-          {action === "Sign Up" ? (
-            <div className="text-sm text-purple-500 mt-2">
-              Already have an account? <span className="cursor-pointer" onClick={() => setAction("Login")}>Login</span>
-            </div>
-          ) : (
-            <div className="forgot-password text-sm text-purple-500 mt-2">
-              Forgot Password? <span className="cursor-pointer">Click here</span>
-            </div>
-          )}
-
-          {action === "Login" && (
-            <>
-            <div className="user-type flex items-center space-x-2">
-
-          <select className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-  value={userType} onChange={(e) => setUserType(e.target.value)} >
-             <option value="user">User</option>
-             <option value="admin">Admin</option>
-           </select>
-           </div>
-            <div className="google-login mt-4">
-              <GoogleLogin
+          <div className="google-login mt-4">
+          <GoogleLogin
                 onSuccess={credentialResponse => {
                   console.log(credentialResponse);
                 }}
@@ -197,28 +182,25 @@ const LoginSignup = () => {
                   console.log('Login Failed');
                 }}
               />
-            </div>
-            </>
-          )}
-
-          <div className="submit-container mt-4">
-            {action === "Sign Up" ? (
-              <button className="submit w-full py-2 text-center rounded-lg bg-purple-600 text-white" onClick={handleSignUp}>Sign Up</button>
-            ) : (
-              <button className="submit w-full py-2 text-center rounded-lg bg-purple-600 text-white" onClick={() => console.log('Login')}>Login</button>
-            )}
           </div>
+          <div className="mt-5 text-xs border-b border-gray-400 py-4 text-[#00df9a]">
+            Forgot your password? <Link to="/Forgotpass" className="border-b border-[#00df9a]">Click here</Link>
+         </div>
 
-          {action === "Login" && (
-            <div className="text-sm text-purple-500 mt-2">
-              New user? <span className="cursor-pointer" onClick={() => setAction("Sign Up")}>Sign Up</span>
-            </div>
-          )}
+          <div className="mt-3 text-xs flex justify-between items-center text-[#00df9a]">
+            <p>Don't have an account?</p>
+            <button onClick={navigateToSearch} className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">Register</button>
+          </div>
+        </div>
+
+        {/* image */}
+        <div className="md:block hidden w-1/2">
+          <img className="rounded-2xl" src={DeliveryImg} alt="Login" />
         </div>
       </div>
-    </div>
+    </section>
+   
   );
-}
+};
 
-export default LoginSignup; 
-
+export default LoginSignup;
