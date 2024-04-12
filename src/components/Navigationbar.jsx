@@ -27,14 +27,12 @@ const Navigationbar = () => {
                         Services
                     </li>
                 </RouterLink>
-
-                <RouterLink to="/form">
+                <RouterLink to="/Cart">
                     <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>
                         Place Order
                     </li>
                 </RouterLink>
                 <RouterLink to="/Login">
-
                     <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>
                         SignIn
                     </li>
@@ -52,13 +50,9 @@ const Navigationbar = () => {
                     <Link spy={true} smooth={true} duration={500} to="Home" offset={-70} className={navLinkClass}>Home</Link>
                     <Link spy={true} smooth={true} duration={500} to="About" offset={-70} className={navLinkClass}>About</Link>
                     <RouterLink to="/service" className={navLinkClass}>Services</RouterLink>
-                    <RouterLink to="/form" className={navLinkClass}>Place Order</RouterLink>
+                    <RouterLink to="/Cart" className={navLinkClass}>Place Order</RouterLink>
                     <Link spy={true} smooth={true} duration={500} to="Contact" offset={-70} className={navLinkClass}>Contact</Link>
-
-                    {/* <RouterLink to="/authentication" className={navLinkClass}>Sign In</RouterLink> */}
-
                     <RouterLink to="/Login" className={navLinkClass}>Sign In</RouterLink>
-
                 </ul>
                 <div className='lg:hidden block' onClick={handleClick}>
                     {click ? <FaTimes size={20} color="white" /> : <CgMenu size={20} color="white" />}
