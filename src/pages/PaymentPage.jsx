@@ -18,7 +18,7 @@ const PaymentPage = () => {
     // Redirect if no order data is present, after component mounts
     useEffect(() => {
       if (!order) {
-        navigate('/form'); 
+        navigate('/payment'); 
       }
     }, [order, navigate]);
   
@@ -129,7 +129,7 @@ const PaymentPage = () => {
             type="submit"
             className="bg-[#00df9a] hover:bg-[#00b882] text-white font-medium py-2 px-4 rounded"
           >
-            Confirm Payment
+            Checkout
           </button>
         </form>
       </div>

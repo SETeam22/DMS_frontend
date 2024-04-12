@@ -15,12 +15,18 @@ import LoginForm from './pages/LoginForm.jsx';
 import Signup from './pages/Signup.jsx';
 import Forgotpass from './pages/Forgotpass.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
-import PlaceDeliveryForm from './pages/PlaceDeliveryForm.jsx';
 import PaymentPage from './pages/PaymentPage.jsx';
+import OrderFormC from './pages/OrderFormC.jsx';
+import CheckoutPage from './pages/CheckoutPage.jsx';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import OrderConfirmation from './pages/OrderConfirmation.jsx';
 
+const stripePromise = loadStripe('pk_test_51P4XOb04o0QsZsCzFDD16nbBHkwLG98v7UpPaEhOijTcjfVpxXOJ9DnIQ1NHIo8f042alKwzsyxDcW5058IKQxIE00r0asVmTN');
 
 const App = () => {
   return (
+  <Elements stripe={stripePromise}> 
     <BrowserRouter>
       <GoogleOAuthProvider clientId="263174241117-n1j7q8eqn323sr1s0p3i6t637589c8um.apps.googleusercontent.com">
         <Routes>
@@ -37,14 +43,17 @@ const App = () => {
           <Route path='/Register' element={<Signup />} />
           <Route path='/Forgotpass' element={<Forgotpass />} />
           <Route path='/AdminLogin' element={<AdminLogin />} />
-          <Route path='/form' element={<PlaceDeliveryForm />} />
           <Route path='/payment' element={<PaymentPage />} />
+          <Route path='/Cart' element={<OrderFormC />} />
+          <Route path='/Checkout' element={<CheckoutPage />} />
+          <Route path='/order-confirmation' element={<OrderConfirmation />} />
 
 
         </Routes>
       </GoogleOAuthProvider>
       <Chatbot /> {/* Add the chatbot to your app */}
     </BrowserRouter>
+  </Elements>
   );
 };
 
