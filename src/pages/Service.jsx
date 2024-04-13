@@ -113,7 +113,8 @@ const Service = () => {
           <Link to="/user-profile">User Profile</Link>
           <Link to="/track-orders">Track Orders</Link>
           <Link to="/past-orders">Past Orders</Link>
-          <Link to="/submit-reviews" className="bg-green-500 text-white rounded p-2">Submit Reviews</Link>
+          <Link to="/submit-reviews" className="text-white rounded p-2 bg-gray-800 hover:bg-gray-700">Submit Reviews</Link>
+
         </nav>
       </header>
 
