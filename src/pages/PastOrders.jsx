@@ -67,6 +67,7 @@ const PastOrders = () => {
   return (
     <div>
       <LoginNavBar />
+      <div className="mt-24">
     <div className="min-h-screen bg-green-100 flex flex-col">
       <div className="container mx-auto p-4">
         <h1 className="text-3xl font-bold mb-8 text-center">Past Orders</h1>
@@ -91,6 +92,7 @@ const PastOrders = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
     </div>
   );

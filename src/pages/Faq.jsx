@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LoginNavBar from '../components/LoginNavBar';
 
 const Faq = () => {
   
@@ -130,15 +131,12 @@ const Faq = () => {
   ];
 
   return (
+    <div>
+      <LoginNavBar />
+      <div className="mt-24">
     <div className="bg-green-100 min-h-screen py-8">
       <div className="container mx-auto">
-        {/* Home Button */}
-        <Link
-          to="/"
-          className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline m-4"
-        >
-          Home
-        </Link>
+        
 
         {/* FAQ Section */}
         <div>
@@ -153,6 +151,8 @@ const Faq = () => {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 };

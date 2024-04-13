@@ -106,6 +106,7 @@ const Service = () => {
   return (
     <div>
       <LoginNavBar /> {/* Include the navigation bar component */}
+      <div className="mt-24">
 
       <div className="p-4">
         <div className="flex items-center mb-4">
@@ -215,6 +216,7 @@ const Service = () => {
           ))}
         </div>
       </div>
+    </div>
     </div>
   );
 };

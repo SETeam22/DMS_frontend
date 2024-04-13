@@ -28,6 +28,7 @@ const TrackOrder = () => {
   return (
     <div>
       <LoginNavBar />
+      <div className="mt-24">
     <div className="container mx-auto p-4">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <div className="bg-green-500 p-4 text-white">
@@ -65,6 +66,7 @@ const TrackOrder = () => {
           </MapContainer>
         </div>
       </div>
+    </div>
     </div>
     </div>
   );

@@ -64,6 +64,7 @@ const UserProfile = () => {
   return (
     <div>
       <LoginNavBar />
+      <div className="mt-24">
     
     <div className="bg-green-100">
       <div className="container mx-auto p-4 flex justify-between items-center">
@@ -190,6 +191,7 @@ const UserProfile = () => {
 
         
       </div>
+    </div>
     </div>
     </div>
   );
