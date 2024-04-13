@@ -3,7 +3,6 @@ import { FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import LoginNavBar from '../components/LoginNavBar';
 
-
 const SubmitReview = () => {
   const [pastOrders] = useState([
     { id: 1, orderNumber: 'ORD123' },
@@ -37,56 +36,52 @@ const SubmitReview = () => {
     <div>
       <LoginNavBar />
       <div className="mt-24">
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <div style={{ maxWidth: '600px', padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
-        <h2 style={{ marginBottom: '20px', textAlign: 'center', color: '#333', fontWeight: 'bold' }}>Submit Your Review</h2>
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ marginRight: '10px', color: '#333', fontWeight: 'bold' }}>Select Order:</label>
-          <select value={selectedOrder} onChange={(e) => setSelectedOrder(e.target.value)} style={{ padding: '8px', borderRadius: '5px', border: '1px solid #ccc', width: '100%' }}>
-            <option value="">Select an order</option>
-            {pastOrders.map((order) => (
-              <option key={order.id} value={order.id}>{order.orderNumber}</option>
-            ))}
-          </select>
+        <div className="flex justify-center items-center h-screen">
+          <div className="max-w-lg p-8 bg-gray-100 rounded-lg shadow-md">
+            <h2 className="text-2xl font-bold mb-6 text-[#00df9a] bg-black p-2 rounded-lg text-center">Submit Your Review</h2>
+            <div className="mb-4">
+              <label className="block text-gray-700 font-bold mb-2">Select Order:</label>
+              <select
+                value={selectedOrder}
+                onChange={(e) => setSelectedOrder(e.target.value)}
+                className="form-select w-full p-2 rounded border border-gray-300"
+              >
+                <option value="">Select an order</option>
+                {pastOrders.map((order) => (
+                  <option key={order.id} value={order.id}>{order.orderNumber}</option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-4 flex items-center">
+              <label className="text-gray-700 font-bold mr-2">Rating:</label>
+              {[...Array(5)].map((_, index) => (
+                <FaStar
+                  key={index}
+                  style={{ cursor: 'pointer', color: rating >= index + 1 ? '#ffc107' : '#e4e5e9' }}
+                  onClick={() => setRating(index + 1)}
+                />
+              ))}
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 font-bold mb-2">Your Feedback:</label>
+              <textarea
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                className="form-textarea w-full p-2 rounded border border-gray-300"
+                rows="4"
+                placeholder="Tell us about your experience..."
+              />
+            </div>
+            <button
+              className="bg-black hover:bg-gray-400 text-[#00df9a] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+              onClick={handleSubmitReview}
+            >
+              Submit Review
+            </button>
+            <p className="text-center text-sm text-gray-600 mt-4">Your feedback helps us improve our service. Thank you for taking the time!</p>
+          </div>
         </div>
-        <div style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', color: '#333', fontWeight: 'bold' }}>
-          <label style={{ marginRight: '10px' }}>Rating:</label>
-          {[...Array(5)].map((_, index) => (
-            <FaStar
-              key={index}
-              style={{ cursor: 'pointer', color: rating >= index + 1 ? '#ffc107' : '#e4e5e9' }}
-              onClick={() => setRating(index + 1)}
-            />
-          ))}
-        </div>
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ marginRight: '10px', color: '#333', fontWeight: 'bold' }}>Your Feedback:</label>
-          <textarea
-            style={{ width: '100%', padding: '8px', borderRadius: '5px', border: '1px solid #ccc', minHeight: '100px' }}
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-            placeholder="Tell us about your experience..."
-          />
-        </div>
-        <button
-          style={{
-            padding: '12px 24px',
-            backgroundColor: '#28a745', // Green color
-            color: '#fff',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            width: '100%',
-            fontWeight: 'bold',
-          }}
-          onClick={handleSubmitReview}
-        >
-          Submit Review
-        </button>
-        <p style={{ marginTop: '10px', textAlign: 'center', fontSize: '14px', color: '#666' }}>Your feedback helps us improve our service. Thank you for taking the time!</p>
       </div>
-    </div>
-    </div>
     </div>
   );
 };
