@@ -1,9 +1,6 @@
-// PastOrders.jsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LoginNavBar from '../components/LoginNavBar';
-
 
 const PastOrders = () => {
   const pastOrders = [
@@ -68,32 +65,30 @@ const PastOrders = () => {
     <div>
       <LoginNavBar />
       <div className="mt-24">
-    <div className="min-h-screen bg-green-100 flex flex-col">
-      <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-8 text-center">Past Orders</h1>
-        {pastOrders.map((order, index) => (
-          <div key={index} className="max-w-lg mx-auto mb-6 bg-gray-100 rounded-lg shadow-md p-8 text-black">
-            <h2 className="text-2xl font-bold mb-4">Order {order.orderId}</h2>
-            <div className="mb-4">
-              <p className="font-semibold">Status: {order.status}</p>
-              <p className="font-semibold">Delivery Service: {order.deliveryService}</p>
-              <p className="font-semibold">Delivery Date: {order.deliveryDate}</p>
-              <p className="font-semibold">Price: ${order.price}</p>
+        <div className="container mx-auto p-4">
+          <h1 className="text-3xl font-bold mb-8 text-center text-[#00df9a] bg-black p-2 rounded-lg">Past Orders</h1>
+          {pastOrders.map((order, index) => (
+            <div key={index} className="w-full mx-auto mb-6 bg-gray-100 rounded-lg shadow-md p-8 text-black">
+              <h2 className="text-2xl font-bold mb-4">Order {order.orderId}</h2>
+              <div className="mb-4">
+                <p className="font-semibold">Status: {order.status}</p>
+                <p className="font-semibold">Delivery Service: {order.deliveryService}</p>
+                <p className="font-semibold">Delivery Date: {order.deliveryDate}</p>
+                <p className="font-semibold">Price: ${order.price}</p>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Items</h3>
+                {order.items.map((item, itemIndex) => (
+                  <div key={itemIndex} className="border-b border-gray-300 pb-2 mb-2">
+                    <p>{item.name}</p>
+                    <p>Quantity: {item.quantity}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-2">Items</h3>
-              {order.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="border-b border-gray-300 pb-2 mb-2">
-                  <p>{item.name}</p>
-                  <p>Quantity: {item.quantity}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-    </div>
     </div>
   );
 };
