@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import LoginNavBar from '../components/LoginNavBar';
+
 
 const SubmitReview = () => {
   const [pastOrders] = useState([
@@ -32,9 +34,10 @@ const SubmitReview = () => {
   };
 
   return (
+    <div>
+      <LoginNavBar />
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <div style={{ maxWidth: '600px', padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '10px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
-        <Link to="/" style={{ position: 'absolute', top: '20px', left: '20px', padding: '8px 12px', backgroundColor: '#28a745', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Home</Link>
         <h2 style={{ marginBottom: '20px', textAlign: 'center', color: '#333', fontWeight: 'bold' }}>Submit Your Review</h2>
         <div style={{ marginBottom: '15px' }}>
           <label style={{ marginRight: '10px', color: '#333', fontWeight: 'bold' }}>Select Order:</label>
@@ -81,6 +84,7 @@ const SubmitReview = () => {
         </button>
         <p style={{ marginTop: '10px', textAlign: 'center', fontSize: '14px', color: '#666' }}>Your feedback helps us improve our service. Thank you for taking the time!</p>
       </div>
+    </div>
     </div>
   );
 };

@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LoginNavBar from '../components/LoginNavBar';
+
 
 const PastOrders = () => {
   const pastOrders = [
@@ -63,9 +65,10 @@ const PastOrders = () => {
   ];
 
   return (
+    <div>
+      <LoginNavBar />
     <div className="min-h-screen bg-green-100 flex flex-col">
       <div className="container mx-auto p-4">
-        <Link to="/" style={{ position: 'absolute', top: '20px', left: '20px', padding: '8px 12px', backgroundColor: '#28a745', color: '#fff', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Home</Link>
         <h1 className="text-3xl font-bold mb-8 text-center">Past Orders</h1>
         {pastOrders.map((order, index) => (
           <div key={index} className="max-w-lg mx-auto mb-6 bg-gray-100 rounded-lg shadow-md p-8 text-black">
@@ -88,6 +91,7 @@ const PastOrders = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };

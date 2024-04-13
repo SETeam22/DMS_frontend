@@ -1,6 +1,8 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import LoginNavBar from '../components/LoginNavBar';
+
 
 // Be sure to include this CSS to fix the marker icon not showing up due to a known issue with Leaflet
 const mapStyles = {
@@ -24,6 +26,8 @@ const TrackOrder = () => {
   };
 
   return (
+    <div>
+      <LoginNavBar />
     <div className="container mx-auto p-4">
       <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <div className="bg-green-500 p-4 text-white">
@@ -61,6 +65,7 @@ const TrackOrder = () => {
           </MapContainer>
         </div>
       </div>
+    </div>
     </div>
   );
 };

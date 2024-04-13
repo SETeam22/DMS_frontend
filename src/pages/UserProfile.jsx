@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import LoginNavBar from '../components/LoginNavBar';
 
 const HelpButton = () => {
   return (
@@ -61,6 +62,9 @@ const UserProfile = () => {
   const averageSpent = totalSpent / recentOrders.length;
 
   return (
+    <div>
+      <LoginNavBar />
+    
     <div className="bg-green-100">
       <div className="container mx-auto p-4 flex justify-between items-center">
         <h2 className="text-2xl font-bold mx-auto">User Profile</h2> 
@@ -186,6 +190,7 @@ const UserProfile = () => {
 
         
       </div>
+    </div>
     </div>
   );
 };
