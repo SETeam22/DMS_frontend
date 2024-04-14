@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LoginNavBar from '../components/LoginNavBar';
+import { secureFetch } from '../helper/SecureFetch.jsx';
 
 const Service = () => {
   const [services, setServices] = useState([]);
@@ -39,12 +40,12 @@ const Service = () => {
 
   useEffect(() => {
     fetchServices();
-    fetchUserData();
+    // fetchUserData();
   }, []);
 
   const fetchServices = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/services/delivery-services');
+      const response = await secureFetch('/services/delivery-services');
       const data = await response.json();
       setServices(data);
     } catch (error) {
@@ -52,19 +53,9 @@ const Service = () => {
     }
   };
 
-  const fetchUserData = async () => {
-    try {
-      const response = await fetch('http://localhost:3000/api/user');
-      const userData = await response.json();
-      setUser(userData);
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
-
   const handleSearch = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/services/search?key=${searchTerm}`);
+      const response = await fetch(`/api/services/search?key=${searchTerm}`);
       const data = await response.json();
       setServices(data);
     } catch (error) {
@@ -75,7 +66,7 @@ const Service = () => {
   const handleFilter = async () => {
     const queryParams = new URLSearchParams(filter).toString();
     try {
-      const response = await fetch(`http://localhost:3000/api/services/filter?${queryParams}`);
+      const response = await fetch(`/api/services/filter?${queryParams}`);
       const data = await response.json();
       setServices(data);
     } catch (error) {

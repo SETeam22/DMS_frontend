@@ -42,7 +42,7 @@ import { useNavigate } from 'react-router-dom';
 const Hero = () => {
   const navigate = useNavigate(); 
   const navigateToSearch = () => {
-    navigate('/order'); 
+    navigate('/Register'); 
   };
   return (
     <div className='bg-black text-white'>

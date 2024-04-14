@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
 
 
+
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,17 +34,42 @@ const LoginForm = () => {
     setCaptchaValue(value); // Add this line
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!captchaValue) {
       alert("Please verify you are not a robot.");
       return;
     }
-    // Add your login logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('User Type:', userType);
+  
+    const userData = {
+      email: email,
+      password: password,
+      userType: userType
+    };
+  
+    try {
+      const response = await fetch('/api/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+  
+      const data = await response.json();
+      if (response.ok) {
+        console.log('Login successful:', data);
+        localStorage.setItem('authToken', data.token);  // Assuming the token is named 'token' in the response
+        navigate('/service');  // Navigate to home or dashboard after successful login
+      } else {
+        throw new Error(data.message || "Unable to login");
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert(error.message);
+    }
   };
+  
 
   // const handleGoogleRegister = () => {
   //   // Placeholder for Google OAuth integration
