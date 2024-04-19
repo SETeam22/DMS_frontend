@@ -1,8 +1,8 @@
 
-             
-
+            
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoginNavBar from '../components/LoginNavBar';
 
 const OrderFormC = () => {
   const [order, setOrder] = useState({
@@ -51,8 +51,10 @@ const OrderFormC = () => {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen flex items-center justify-center p-10">
-      <div className="bg-white max-w-2xl mx-auto p-8 shadow-lg w-full rounded-2xl">
+    <div>
+      <LoginNavBar />
+    <div className="bg-gray-50 min-h-screen flex items-center justify-center pt-30 p-10">
+      <div className="bg-white max-w-2xl mx-auto p-8 shadow-lg w-full rounded-2xl mt-20">
         <h2 className="text-3xl font-bold text-center text-[#00df9a] mb-6">Place Order</h2>
         <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
           <label className="block">
@@ -166,6 +168,7 @@ const OrderFormC = () => {
             Checkout
           </button>
         </form>
+        </div>
       </div>
     </div>
   );
