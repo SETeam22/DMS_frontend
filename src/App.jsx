@@ -29,6 +29,29 @@ import CheckoutPage from './pages/CheckoutPage.jsx';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import OrderConfirmation from './pages/OrderConfirmation.jsx';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarController,
+  registerables
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarController,
+  registerables
+);
+
 
 const stripePromise = loadStripe('pk_test_51P4XOb04o0QsZsCzFDD16nbBHkwLG98v7UpPaEhOijTcjfVpxXOJ9DnIQ1NHIo8f042alKwzsyxDcW5058IKQxIE00r0asVmTN');
 
@@ -38,6 +61,7 @@ const App = () => {
     <BrowserRouter>
       <GoogleOAuthProvider clientId="263174241117-n1j7q8eqn323sr1s0p3i6t637589c8um.apps.googleusercontent.com">
         <Routes>
+    
           <Route path="/" element={<Home />} />
           <Route path="/authentication" element={<LoginSignup />} />
           <Route path="/SignIn" element={<LoginSignup />} />

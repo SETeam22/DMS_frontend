@@ -2,6 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import LoginNavBar from '../components/LoginNavBar';
 import { secureFetch } from '../helper/SecureFetch.jsx';
+import fedex from '../assets/fedex.jpg';
+import usps from '../assets/usps.jpg';
+import dhl from '../assets/dhl.jpeg'; // Note: Make sure the extension matches what you have in your assets folder
+import amazonlogistics from '../assets/amazonlogistics.jpg';
+import royalmail from '../assets/royalmail.jpg';
+import ups from '../assets/ups.jpg';
+import dhlexpress from '../assets/dhlexpress.jpg';
+import canadapost from '../assets/canadapost.jpg';
+import tntexpress from '../assets/tntexpress.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const Service = () => {
   const [services, setServices] = useState([]);
@@ -13,8 +23,12 @@ const Service = () => {
     minPrice: '',
     maxPrice: '',
   });
+  const navigate = useNavigate();
+  const handleOrderClick = (service) => {
+    navigate('/Cart', { state: { service } });
+  };
   const [user, setUser] = useState(null);
-
+  
   const [availableServices, setAvailableServices] = useState([
     'FedEx',
     'USPS',
@@ -45,9 +59,17 @@ const Service = () => {
 
   const fetchServices = async () => {
     try {
-      const response = await secureFetch('/services/delivery-services');
-      const data = await response.json();
-      setServices(data);
+      const response = await fetch('http://localhost:3000/api/services/delivery-services', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+     // const response = await Fetch('http://localhost:3000/api/services/delivery-services');
+     const data = await response.json();
+     
+    setServices(data);
+     
     } catch (error) {
       console.error('Error fetching services:', error);
     }
@@ -55,8 +77,9 @@ const Service = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`/api/services/search?key=${searchTerm}`);
+      const response = await fetch(`http://localhost:3000/api/services/search?key=${searchTerm}`);
       const data = await response.json();
+      console.log(data);
       setServices(data);
     } catch (error) {
       console.error('Error searching services:', error);
@@ -66,8 +89,9 @@ const Service = () => {
   const handleFilter = async () => {
     const queryParams = new URLSearchParams(filter).toString();
     try {
-      const response = await fetch(`/api/services/filter?${queryParams}`);
+      const response = await fetch(`http://localhost:3000/api/services/filter?${queryParams}`);
       const data = await response.json();
+      console.log(data);
       setServices(data);
     } catch (error) {
       console.error('Error filtering services:', error);
@@ -94,10 +118,49 @@ const Service = () => {
     setShowTypeDropdown(false);
   };
 
+  const getImageForService = (companyName) => {
+    switch (companyName.toLowerCase()) {
+      case 'fedex':
+        return fedex;
+      case 'usps':
+        return usps;
+      case 'dhl':
+        return dhl;
+      case 'amazon logistics':
+        return amazonlogistics;
+      case 'royal mail':
+        return royalmail;
+      case 'ups':
+        return ups;
+      case 'dhl express':
+        return dhlexpress;
+      case 'canada post':
+        return canadapost;
+      case 'tnt express':
+        return tntexpress;
+      default:
+        return '/assets/default.jpg'; // Default image or another fallback
+    }
+  };
+  function renderStars(rating) {
+    const filledStars = Math.round(rating);
+    const emptyStars = 5 - filledStars;
+    return (
+      <div>
+        {'★'.repeat(filledStars)}
+        {'☆'.repeat(emptyStars)}
+      </div>
+    );
+  }
+  
+
   return (
     <div>
-      <LoginNavBar /> {/* Include the navigation bar component */}
+      <LoginNavBar />
       <div className="mt-24">
+        <div className="bg-red-500 text-white p-4 text-center">
+          Get 10% off on your first order! Sign up today.
+        </div>
         <div className="p-4">
           <div className="flex items-baseline mb-4">
             <input
@@ -108,13 +171,13 @@ const Service = () => {
               onChange={handleInputChange}
             />
             <button
-              className="bg-black hover:bg-gray-400 text-[#00df9a] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
+              className="bg-white hover:bg-gray-400 text-[#00df9a] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2"
               onClick={handleSearch}
             >
               Search
             </button>
           </div>
-          <div className="bg-black p-4 rounded mb-4">
+          <div className="bg-white p-4 rounded mb-2 w-full">
             <div className="flex items-baseline mb-2">
               <input
                 type="text"
@@ -193,17 +256,36 @@ const Service = () => {
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4">
-            {services.map((service) => (
-              <div key={service._id} className="border border-gray-300 rounded p-4">
-                <h3 className="font-bold">{service.deliveryServiceTitle}</h3>
-                <p>Type: {service.deliverServiceType}</p>
-                <p>Description: {service.deliveryServiceDescription}</p>
-                <p>Company: {service.deliverServiceCompany}</p>
-                <p>Price: ${service.deliverServicePrice}</p>
-              </div>
-            ))}
+          <div className="p-4 bg-blue-100">
+            <h2 className="font-bold text-lg mb-2">Recommended for You</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Recommendations Map */}
+            </div>
           </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {services.map((service) => (
+    <div key={service._id} className="border border-gray-300 rounded p-4 flex flex-col">
+      <img src={getImageForService(service.deliverServiceCompany)} alt={service.deliveryServiceTitle} className="w-full h-40 object-cover rounded" />
+      <div className="p-2 flex-grow">
+        <h3 className="font-bold">{service.deliveryServiceTitle}</h3>
+        <p>Type: {service.deliverServiceType}</p>
+        <p>Description: {service.deliveryServiceDescription}</p>
+        <p>Company: {service.deliverServiceCompany}</p>
+        <p>Price: ${service.deliverServicePrice}</p>
+        <div className="flex items-center">
+          <span>{renderStars(service.rating)}</span>
+          <span className="ml-2 text-sm text-gray-600">({service.noppl} reviews)</span>
+        </div>
+      </div>
+      <button className="mt-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+       onClick={() => handleOrderClick(service)}>
+        Order Now
+      </button>
+    </div>
+  ))}
+</div>
+
         </div>
       </div>
     </div>

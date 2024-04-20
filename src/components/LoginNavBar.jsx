@@ -17,17 +17,24 @@ const LoginNavBar = () => {
   const content = (
     <div className='lg:hidden block absolute top-16 w-full left-0 right-0 bg-black transition'>
       <ul className='text-center text-xl p-10'>
-        <Link to="/user-profile">
-          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>User Profile</li>
+      <Link to="/service">
+          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Home</li>
         </Link>
         <Link to="/track-orders">
           <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Track Orders</li>
         </Link>
         <Link to="/past-orders">
-          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Past Orders</li>
+          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Transactions</li>
         </Link>
-        <Link to="/submit-reviews">
-          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Submit Reviews</li>
+       
+        <Link to="/faq">
+          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Help</li>
+        </Link>
+        <Link to="/user-profile">
+          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>User Profile</li>
+        </Link>
+        <Link to="/logout">
+          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Logout</li>
         </Link>
       </ul>
     </div>
@@ -41,10 +48,15 @@ const LoginNavBar = () => {
           DeliverEase
         </Link>
         <ul className={`lg:flex hidden gap-8 items-center font-normal ${click ? 'hidden' : ''}`}>
-          <Link to="/user-profile" className={navLinkClass}>User Profile</Link>
+          <Link to="/service" className={navLinkClass}>Home</Link>
+          
           <Link to="/track-orders" className={navLinkClass}>Track Orders</Link>
-          <Link to="/past-orders" className={navLinkClass}>Past Orders</Link>
-          <Link to="/submit-reviews" className={`${navLinkClass} bg-black rounded p-2 hover:bg-slate-800`}>Submit Reviews</Link>
+          <Link to="/past-orders" className={navLinkClass}>Transactions</Link>
+          
+          <Link to="/faq" className={navLinkClass}>Help</Link>
+          {/* <Link to="/submit-reviews" className={`${navLinkClass} bg-black rounded p-2 hover:bg-slate-800`}>Submit Reviews</Link> */}
+          <Link to="/user-profile" className={navLinkClass}>User Profile</Link>
+          <Link to="/" className={navLinkClass}>Logout</Link>
         </ul>
         {/* Menu toggle icon */}
         <div className='lg:hidden block' onClick={handleClick}>
