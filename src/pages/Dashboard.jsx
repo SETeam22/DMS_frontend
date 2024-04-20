@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Sidenav from '../components/Sidenav';
 import Orders from './Orders';
 import MapView from './MapView';
-import Adminnav from '../components/Adminnav'
+import Adminnav from '../components/Adminnav';
 
 const Dashboard = () => {
   const [totalOrders, setTotalOrders] = useState(0);

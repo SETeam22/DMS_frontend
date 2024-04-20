@@ -10,6 +10,7 @@ import Paper from "@mui/material/Paper";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Sidenav from '../components/Sidenav';
+import Adminnav from '../components/Adminnav';
 
 const Orders = () => {
   const [orderRows, setOrderRows] = useState([
@@ -80,6 +81,9 @@ const Orders = () => {
   return (
     <div className="flex">
       <Sidenav /> 
+      <div className="flex flex-1 flex-col">
+      <Adminnav />
+    
       <div className="shadow-lg p-5 m-5">
         <div className="font-medium text-gray-500 mb-4">Latest Orders</div>
         <TableContainer component={Paper} className="shadow-md">
@@ -123,6 +127,7 @@ const Orders = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      </div>
       </div>
     </div>          
   );
