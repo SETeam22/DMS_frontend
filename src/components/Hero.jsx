@@ -8,7 +8,9 @@ import { useNavigate } from 'react-router-dom';
 const Hero = () => {
   const navigate = useNavigate(); 
   const navigateToSearch = () => {
-    navigate('/Login'); 
+
+    navigate('/Register'); 
+
   };
   return (
     <div className='bg-black text-white'>

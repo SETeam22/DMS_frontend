@@ -74,10 +74,7 @@ const App = () => {
             <Route path="/Adminservice" element={<AdminServices />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/reviews" element={<AdminReviews />} />
-            
-
-
-          </Routes>
+       </Routes>
         </GoogleOAuthProvider>
         <Chatbot /> {/* Add the chatbot to your app */}
     

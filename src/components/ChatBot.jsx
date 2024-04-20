@@ -12,7 +12,7 @@ const Chatbot = ({ isOpen }) => {
       setInputValue('');
       // Simulate a response from the chatbot
       setTimeout(() => {
-        setMessages((prevMessages) => [...prevMessages, { text: "I'm a chatbot response", direction: 'incoming' }]);
+        setMessages((prevMessages) => [...prevMessages, { text: "hello , I'm a Virtually Assitant , For tracking order got to 'Track Orders' menu and For chating with manager got to 'Help' menu", direction: 'incoming' }]);
       }, 1000);
     }
   };

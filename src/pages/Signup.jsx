@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { GoogleLogin } from '@react-oauth/google';
+import { signInWithGoogle } from '../helper/authServices'
 import DeliveryImg from '../assets/door-to-door-delivery-flat-deliveryman-courier-vector-29765876.jpg';
 import ReCAPTCHA from "react-google-recaptcha";
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../helper/firebaseConfig';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+
+
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -9,12 +14,52 @@ const Signup = () => {
   const [securityQuestion, setSecurityQuestion] = useState('');
   const [securityAnswer, setSecurityAnswer] = useState('');
   const [captchaValue, setCaptchaValue] = useState(null);
+  const provider = new GoogleAuthProvider();
+  const navigate = useNavigate(); // Create a navigate function
+
+  const signInWithGoogle = async () => {
+    try {
+        // Attempt to sign in with Google
+        const result = await signInWithPopup(auth, provider);
+        
+        // Access the user's Google access token if needed (not typically used for backend calls directly)
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;  // This might be unnecessary unless you need it for accessing Google APIs
+
+        // Extract user details
+        const user = result.user;
+        const userData = {
+            username: user.displayName,
+            email: user.email,
+            profilePicture: user.photoURL
+        };
+        console.log(userData);
+        // Send user data to your backend
+        const response = await fetch('http://localhost:3000/api/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+        });
+        console.log(response);
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        console.log('Login successful:', data);
+        localStorage.setItem('authToken', data.token);  // Assuming the token is named 'token' in the response
+        navigate('/service');
+        // Redirect the user or clear the form here depending on your application flow
+    } catch (error) {
+        // Handle errors from signInWithPopup or the fetch operation
+        console.error('Authentication or network error:', error);
+        alert('Authentication failed. Please try again.');
+    }
+};
 
   
-  const handleGoogleRegister = () => {
-    // Placeholder for Google OAuth integration
-    console.log('Register with Google');
-  };
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -36,23 +81,47 @@ const Signup = () => {
   };
 
   const handleCaptchaChange = (value) => {
-    console.log("Captcha value:", value);
+    //console.log("Captcha value:", value);
     setCaptchaValue(value); // Add this line
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!captchaValue) {
       alert("Please verify you are not a robot.");
       return;
     }
-    // Add your registration logic here
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Security Question:', securityQuestion);
-    console.log('Security Answer:', securityAnswer);
+  
+    const userData = {
+      username: name,
+      email: email,
+      password: password,
+      userType: "user",  // Assuming userType is static for all new users
+      securityQuestion: securityQuestion,
+      securityAnswer: securityAnswer
+    };
+  
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
+      console.log(userData)
+      
+      if (response.ok) {
+  
+        navigate('/service'); // Navigate to verification page
+      }
+      
+    } catch (error) {
+      console.error('Registration failed:', error);
+      alert('Registration failed. Please try again.');
+    }
   };
+  
 
   return (
     <section className="bg-gray-50 min-h-screen flex items-center justify-center">
@@ -64,18 +133,11 @@ const Signup = () => {
           <p className="text-xs mt-4 text-[#00df9a]">Join us today, it only takes a minute</p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input className="p-2 mt-8 rounded-xl border" type="text" name="name" placeholder="Full Name" value={name} onChange={handleNameChange} />
+            <input className="p-2 mt-8 rounded-xl border" type="text" name="name" placeholder="Username" value={name} onChange={handleNameChange} />
             <input className="p-2 rounded-xl border" type="email" name="email" placeholder="Email" value={email} onChange={handleEmailChange} />
             <input className="p-2 rounded-xl border" type="password" name="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
             <div className="google-login mt-4">
-            <GoogleLogin
-                onSuccess={credentialResponse => {
-                  console.log(credentialResponse);
-                }}
-                onError={() => {
-                  console.log('Login Failed');
-                }}
-              />
+            <button onClick={signInWithGoogle}>Sign in with Google</button>
           </div>
             <select className="p-2 mt-4 rounded-xl border" value={securityQuestion} onChange={handleSecurityQuestionChange}>
               <option value="">Select a Security Question</option>

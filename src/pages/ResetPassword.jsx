@@ -1,83 +1,74 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import bcryptjs from 'bcryptjs';
 
 const ResetPassword = () => {
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const token = queryParams.get('token');
 
-    const navigate = useNavigate();
-    const location = useLocation();
-    const { state } = location;
+  const handleResetSubmit = async (e) => {
+    e.preventDefault();
+    if (newPassword !== confirmPassword) {
+      alert("Passwords don't match.");
+      return;
+    }
+    try {
+        const response = await fetch('http://localhost:3000/api/reset-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token, newPassword })  // Send the token and new password to your backend
+        });
 
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-  
-    const handlePasswordChange = (e) => {
-      setPassword(e.target.value);
-    };
-  
-    const handleConfirmPasswordChange = (e) => {
-      setConfirmPassword(e.target.value);
-      if (password !== '' && e.target.value !== '') {
-        setPasswordsMatch(e.target.value === password);
-      } else {
-        setPasswordsMatch(true);
-      }
-    };  
-  
-    const handleReset = async () => {
-
-        if(!passwordsMatch || confirmPassword === ''){
-            return;
+        if (response.ok) {
+            console.log('Password reset successfully');
+            // Handle successful password reset (e.g., redirect to login page)
+        } else {
+            throw new Error('Failed to reset password');
         }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+    console.log('Resetting password for token:', token);
+    // Navigate to login or success page
+    navigate('/login');
+  };
 
-        const hashedPassword = await bcryptjs.hashSync(confirmPassword, 10); 
-    
-        try {
-            const response = await fetch('http://localhost:4000/api/auth/change-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username: state.username, newPassword: hashedPassword })
-            });
-    
-            if (response.ok) {
-                console.log('Password changed successfully');
-                navigate('/service');
-            } else {
-                console.error('Failed to change password');
-            }
-        } catch (error) {
-            console.error('Network error:', error);
-        }
-    };
-    
-    return (
-        <div className="min-h-screen flex justify-center items-center bg-gray-50">
-            <div className="w-96 p-12 bg-white rounded-lg shadow-md">
-                <div className="header mb-6">
-                    <div className="text text-3xl font-semibold text-[#21AC82]">Reset Password</div>
-                    <div className="underline h-1 bg-[#21AC82] mt-2"></div>
-                </div>
-                <div className="inputs space-y-4">
-                    <div className="input flex items-center space-x-2">
-                        <input type="password" placeholder="New Password" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#21AC82]" value={password} onChange={handlePasswordChange} />
-                    </div>
-                    <div className="input flex items-center space-x-2">
-                        <input type="password" placeholder="Confirm Password" className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#21AC82]" value={confirmPassword} onChange={handleConfirmPasswordChange}/>
-                    </div>
-                    {!passwordsMatch && confirmPassword !== '' && <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                                                    <span className="block sm:inline">Passwords do not match!</span>
-                                                                    <span className="absolute top-0 bottom-0 right-0 px-4 py-3"></span>
-                                                                </div>}
-                </div>
-                <div className="submit-container mt-8">
-                    <button className="submit w-full py-2 text-center rounded-lg bg-[#21AC82] text-white" onClick={handleReset}>Reset</button>
-                </div>
-            </div>
-        </div>
-    );
-}
+  return (
+    <section className="bg-gray-50 min-h-screen flex items-center justify-center">
+      <div className="bg-gray-100 p-8 rounded-2xl shadow-lg max-w-md w-full">
+        <h2 className="font-bold text-2xl text-[#00df9a] mb-6 text-center">Set New Password</h2>
+        <form onSubmit={handleResetSubmit}>
+          <input
+            className="p-2 w-full rounded-xl border mb-4"
+            type="password"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+          <input
+            className="p-2 w-full rounded-xl border mb-4"
+            type="password"
+            placeholder="Confirm New Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            className="bg-[#00df9a] rounded-xl text-white py-2 mt-4 w-full hover:scale-105 duration-300"
+          >
+            Reset Password
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+};
 
 export default ResetPassword;

@@ -1,190 +1,167 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import LoginNavBar from '../components/LoginNavBar';
 
-const HelpButton = () => {
-  return (
-    <Link
-      to="/faq"
-      className="bg-black hover:bg-gray-400 text-[#00df9a] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2">
-    
-      Help
-    </Link>
-  );
-};
+import React, { useState, useEffect } from 'react';
+import LoginNavBar from '../components/LoginNavBar';
+import { secureFetch } from '../helper/SecureFetch';
+import CardDataStats from '../components/CardDataStats';
+import BarChart from '../components/BarChart';
+
+
 
 const UserProfile = () => {
   const [editing, setEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState({
-    firstName: "ABC",
-    lastName: "XYZ",
-    street: "123 Dummy Street",
-    apt: "300",
-    zipcode: "12345",
-    email: "abc.xyz@example.com",
-    mobile: "123-456-7890",
+  const [user, setUser] = useState({
+    username: '',
+    email: '',
+    profilePicture: '',
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    street: '',
+    apt: '',
+    zipcode: ''
   });
+  const [stats, setStats] = useState({
+    number_of_orders: 0,
+    total_spend: 0,
+    average_cost_per_order: 0,
+    delivered: 0,
+    pending: 0,
+    last_order: '',
+  });
+  const [chartData, setChartData] = useState(null);
 
-  const toggleEditing = () => {
-    setEditing(!editing);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userProfile = await secureFetch('http://localhost:3000/api/auth/profile', { method: 'GET' });
+        const ordersStats = await secureFetch('http://localhost:3000/api/orders/profile');
+        const chartResponse = await secureFetch('http://localhost:3000/api/orders/yearly-orders');
+     
+        if (userProfile.response.ok) setUser(userProfile.data);
+        if (ordersStats.response.ok) setStats(ordersStats.data);
+        if (chartResponse.response.ok) setChartData(chartResponse.data);
+    
+      }catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setEditedUser({
-      ...editedUser,
-      [name]: value,
-    });
+    setUser(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
-  const saveChanges = () => {
-    setEditing(false);
-  };
-
-  const recentOrders = [
-    {
-      id: 1,
-      date: "2024-03-15",
-      status: "Delivered",
-      items: ["Item 1", "Item 2"],
-      total: 200.00
-    },
-    {
-      id: 2,
-      date: "2024-03-10",
-      status: "Pending",
-      items: ["Item 3", "Item 4"],
-      total: 150.00
+  const saveChanges = async () => {
+    try {
+      const response = await secureFetch('http://localhost:3000/api/auth/updateprofile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user)
+      });
+      if (response.ok) {
+        alert('Profile updated successfully');
+        setEditing(false);
+      } else {
+        throw new Error('Failed to update profile');
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Error updating profile');
     }
-  ];
-
-  const totalSpent = recentOrders.reduce((acc, order) => acc + order.total, 0);
-  const averageSpent = totalSpent / recentOrders.length;
+  };
+  const testdata = [0, 0, 0, 8, 1, 1, 0, 0, 0, 0, 0, 0];
 
   return (
     <div>
       <LoginNavBar />
-      <div className="mt-4 sm:mt-24">
-        <div className="container mx-auto p-4">
-          {/* User Profile */}
-          <div className="bg-gray-100 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4 text-[#00df9a] bg-black p-2 rounded-lg">User Profile</h2> 
-            {/* Editing Controls */}
-            <div className="mb-4">
-              <HelpButton />
+      <div className="mt-4 container mx-auto p-20">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-2xl font-bold text-[#00df9a] mb-6">Profile</h2>
+          <div className="flex items-center space-x-4 mb-4">
+            <img src={user.profilePicture || 'default-profile-pic-url'} alt="Profile" className="w-20 h-20 rounded-full" />
+            <div>
+              <p className="text-lg font-bold">{user.username}</p>
+              <p className="text-sm">{user.email}</p>
             </div>
-            {/* User Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* First Name */}
-              <div>
-                <p className="text-black"><span className="font-bold">First Name:</span> {editing ? (
-                  <input
-                    type="text"
-                    name="firstName"
-                    value={editedUser.firstName}
-                    onChange={handleInputChange}
-                    className="form-input mt-1 w-full"
-                  />
-                ) : (
-                  <span>{editedUser.firstName}</span>
-                )}</p>
-              </div>
-              {/* Last Name */}
-              <div>
-                <p className="text-black"><span className="font-bold">Last Name:</span> {editing ? (
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={editedUser.lastName}
-                    onChange={handleInputChange}
-                    className="form-input mt-1 w-full"
-                  />
-                ) : (
-                  <span>{editedUser.lastName}</span>
-                )}</p>
-              </div>
-              {/* Street */}
-              <div>
-                <p className="text-black"><span className="font-bold">Street:</span> {editing ? (
-                  <input
-                    type="text"
-                    name="street"
-                    value={editedUser.street}
-                    onChange={handleInputChange}
-                    className="form-input mt-1 w-full"
-                  />
-                ) : (
-                  <span>{editedUser.street}</span>
-                )}</p>
-              </div>
-              {/* Apt */}
-              <div>
-                <p className="text-black"><span className="font-bold">Apt:</span> {editing ? (
-                  <input
-                    type="text"
-                    name="apt"
-                    value={editedUser.apt}
-                    onChange={handleInputChange}
-                    className="form-input mt-1 w-full"
-                  />
-                ) : (
-                  <span>{editedUser.apt}</span>
-                )}</p>
-              </div>
-              {/* Zipcode */}
-              <div>
-                <p className="text-black"><span className="font-bold">Zipcode:</span> {editing ? (
-                  <input
-                    type="text"
-                    name="zipcode"
-                    value={editedUser.zipcode}
-                    onChange={handleInputChange}
-                    className="form-input mt-1 w-full"
-                  />
-                ) : (
-                  <span>{editedUser.zipcode}</span>
-                )}</p>
-              </div>
-              {/* Email */}
-              <div>
-                <p className="text-black"><span className="font-bold">Email:</span> {editedUser.email}</p>
-              </div>
-              {/* Mobile Number */}
-              <div>
-                <p className="text-black"><span className="font-bold">Mobile Number:</span> {editedUser.mobile}</p>
-                {/* Edit Button */}
-                <button onClick={toggleEditing} className="bg-black hover:bg-gray-400 text-[#00df9a] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2">
-                  {editing ? 'Cancel' : 'Edit'}
-                </button>
-                {editing && (
-                  <button onClick={saveChanges} className="bg-black hover:bg-gray-400 text-[#00df9a] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-2">
-                    Save
-                  </button>
-                )}
-              </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            {/* Left Column */}
+            <div>
+              {editing ? (
+                <>
+                  <input type="text" name="firstName" value={user.firstName} onChange={handleInputChange} className="form-input mb-2" placeholder="First Name" />
+                  <input type="text" name="lastName" value={user.lastName} onChange={handleInputChange} className="form-input mb-2" placeholder="Last Name" />
+                  <input type="text" name="mobile" value={user.mobile} onChange={handleInputChange} className="form-input" placeholder="Phone Number" />
+                </>
+              ) : (
+                <>
+                  <p>First Name     : {user.firstName}</p>
+                  <p>Last Name      : {user.lastName}</p>
+                  <p>Phone Number   : {user.mobile}</p>
+                </>
+              )}
             </div>
+            {/* Right Column */}
+            <div>
+              {editing ? (
+                <>
+                  <input type="text" name="apt" value={user.apt} onChange={handleInputChange} className="form-input mb-2" placeholder="Apartment" />
+                  <input type="text" name="street" value={user.street} onChange={handleInputChange} className="form-input mb-2" placeholder="Street" />
+                  <input type="text" name="zipcode" value={user.zipcode} onChange={handleInputChange} className="form-input" placeholder="Zip Code" />
+                </>
+              ) : (
+                <>
+                  <p>Apartment: {user.apt}</p>
+                  <p>Street   : {user.street}</p>
+                  <p>Zip Code : {user.zipcode}</p>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="mt-4 flex justify-between">
+            <button onClick={() => setEditing(!editing)} className="bg-[#00df9a] hover:bg-[#00b882] text-white py-2 px-4 rounded">
+              {editing ? 'Cancel' : 'Edit Profile'}
+            </button>
+            {editing && (
+              <button onClick={saveChanges} className="bg-[#00df9a] hover:bg-[#00b882] text-white py-2 px-4 rounded">
+                Save Changes
+              </button>
+            )}
+          </div>
+        </div>
+        {/* Statistics and Chart */}
+        <div className="mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <CardDataStats title="Total Orders" total={`${stats.number_of_orders}`} >
+              <p className="text-2xl font-bold text-[#00df9a] mb-6">{stats.number_of_orders}</p>
+            </CardDataStats>
+            <CardDataStats title="Total Spend" total={`$${stats.total_spend}`} >
+            <p>{stats.total_spend}</p>
+            </CardDataStats>
+            <CardDataStats title="Average Cost" total={`$${stats.average_cost_per_order}`} >
+            <p className="text-2xl font-bold text-[#00df9a] mb-6">{stats.average_cost_per_order}</p>
+            </CardDataStats>
+            <CardDataStats title="Delivered Orders" total={`${stats.delivered}`} >
+            <p>{stats.delivered}</p>
+            </CardDataStats>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-lg mt-6 w-full max-w-2xl">
+             <h2 className="text-2xl font-bold mb-4 ">Recent Order </h2>
+             <p><strong>Order ID:</strong> {stats.last_order.id}</p>
+             <p><strong>Status:</strong> {stats.last_order.status}</p>
+            <p><strong>Price:</strong> {stats.last_order.total}</p>
           </div>
 
-          {/* Spending Statistics */}
-          <div className="mt-8 bg-gray-100 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4 text-[#00df9a] bg-black p-2 rounded-lg">Spending Statistics</h2>
-            <div className="p-2">
-              <p className="text-black"><span className="font-semibold">Total Spent:</span> ${totalSpent.toFixed(2)}</p>
-              <p className="text-black"><span className="font-semibold">Average Order Value:</span> ${averageSpent.toFixed(2)}</p>
-            </div>
-          </div>
-            
-          {/* Recent Orders */}
-          <div className="mt-8 bg-gray-100 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4 text-[#00df9a] bg-black p-2 rounded-lg">Recent Orders</h2>
-            {recentOrders.map(order => (
-              <div key={order.id} className="mb-4 border-b">
-                <p className="text-black"><span className="font-semibold">Order ID:</span> {order.id}</p>
-                <p className="text-black"><span className="font-semibold">Date:</span> {order.date}</p>
-                <p className="text-black"><span className="font-semibold">Status:</span> {order.status}</p>
-                <p className="text-black"><span className="font-semibold">Items:</span> {order.items.join(", ")}</p>
-              </div>
-            ))}
+          <div className="mt-8">
+            <BarChart data={chartData} />
           </div>
         </div>
       </div>
@@ -193,3 +170,4 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
