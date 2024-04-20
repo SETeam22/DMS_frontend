@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoginNavBar from '../components/LoginNavBar';
+import DirectChatPage from '../components/DirectChatPage';
 
 const Faq = () => {
-  
+  const [showMessagePrompt, setShowMessagePrompt] = useState(false);
+  const [showChat, setShowChat] = useState(false);
   const faqs = [
     {
       question: "How do I choose a delivery service on your platform?",
@@ -126,22 +128,48 @@ const Faq = () => {
   return (
     <div>
       <LoginNavBar />
-      <div className="mt-24">
-        <div className="bg-gray-100 min-h-screen py-8">
+      <div className="flex flex-wrap justify-center p-20">
+        {/* Service Details Section */}
+        <div className="bg-white max-w-2xl mx-auto p-8 shadow-lg w-full rounded-2xl">
           <div className="container mx-auto">
             {/* FAQ Section */}
-            <div>
-            <h2 className="text-3xl font-bold text-center mb-8 text-[#00df9a] bg-black p-2 rounded-lg">Frequently Asked Questions (FAQs)</h2>
-              <div className="divide-y divide-gray-200">
-                {faqs.map((faq, index) => (
-                  <div key={index} className="py-4">
-                    <h3 className="text-lg font-semibold">{faq.question}</h3>
-                    <p className="text-gray-700 mt-2">{faq.answer}</p>
-                  </div>
-                ))}
-              </div>
+            <h2 className="text-3xl font-bold text-center mb-8 text-[#00df9a] p-2 rounded-lg">Frequently Asked Questions (FAQs)</h2>
+            <div className="divide-y divide-gray-200">
+              {faqs.map((faq, index) => (
+                <div key={index} className="py-4">
+                  <h3 className="text-lg font-semibold">{faq.question}</h3>
+                  <p className="text-gray-700 mt-2">{faq.answer}</p>
+                </div>
+              ))}
             </div>
           </div>
+        </div>
+
+        {/* Chat Section */}
+        <div className="bg-white max-w-2xl mx-auto p-8 shadow-lg w-full rounded-2xl">
+        <h2 className="text-3xl font-bold text-center mb-8 text-[#00df9a] p-2 rounded-lg">Contact Manager</h2>
+          <DirectChatPage/>
+        {/* {!showMessagePrompt && (
+                    <button
+                        onClick={() => setShowMessagePrompt(true)}
+                        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Need to message a manager?
+                    </button>
+                )}
+                {showMessagePrompt && !showChat && (
+                    <button
+                        onClick={() => setShowChat(true)}
+                        className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Yes, open chat
+                    </button>
+                )}
+                {showChat && (
+                    <div className="bg-white max-w-2xl mx-auto p-8 shadow-lg w-full rounded-2xl">
+                        <DirectChatPage />
+                    </div>
+                )} */}
         </div>
       </div>
     </div>
@@ -149,3 +177,5 @@ const Faq = () => {
 };
 
 export default Faq;
+
+

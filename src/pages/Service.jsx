@@ -42,15 +42,38 @@ const Service = () => {
   ]);
 
   const [availableTypes] = useState([
-    'small packages delivery',
-    'medium packages delivery',
-    'large packages delivery'
+    'express document shipping',
+    'standard mail',
+    'international shipping',
+    'same-day delivery',
+    'local postal service',
+    'large packages delivery',
+    'international express',
+    'national postal service',
+    'urgent parcel delivery'
+
   ]);
 
   const [showCompanyDropdown, setShowCompanyDropdown] = useState(false);
   const [showTypeDropdown, setShowTypeDropdown] = useState(false);
   const companyDropdownRef = useRef(null);
   const typeDropdownRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (showCompanyDropdown && companyDropdownRef.current && !companyDropdownRef.current.contains(e.target)) {
+        setShowCompanyDropdown(false);
+      }
+      if (showTypeDropdown && typeDropdownRef.current && !typeDropdownRef.current.contains(e.target)) {
+        setShowTypeDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showCompanyDropdown, showTypeDropdown]);
 
   useEffect(() => {
     fetchServices();
@@ -97,6 +120,9 @@ const Service = () => {
       console.error('Error filtering services:', error);
     }
   };
+
+  const toggleCompanyDropdown = () => setShowCompanyDropdown(!showCompanyDropdown);
+  const toggleTypeDropdown = () => setShowTypeDropdown(!showTypeDropdown);
 
   const updateFilter = (key, value) => {
     setFilter((prev) => ({ ...prev, [key]: value }));
@@ -159,7 +185,7 @@ const Service = () => {
       <LoginNavBar />
       <div className="mt-24">
         <div className="bg-red-500 text-white p-4 text-center">
-          Get 10% off on your first order! Sign up today.
+          Get 10% off on your first order!Avail it today.
         </div>
         <div className="p-4">
           <div className="flex items-baseline mb-4">

@@ -82,7 +82,7 @@ const UserProfile = () => {
   return (
     <div>
       <LoginNavBar />
-      <div className="mt-4 container mx-auto p-4">
+      <div className="mt-4 container mx-auto p-20">
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-bold text-[#00df9a] mb-6">Profile</h2>
           <div className="flex items-center space-x-4 mb-4">
@@ -141,13 +141,13 @@ const UserProfile = () => {
         <div className="mt-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <CardDataStats title="Total Orders" total={`${stats.number_of_orders}`} >
-              <p>{stats.number_of_orders}</p>
+              <p className="text-2xl font-bold text-[#00df9a] mb-6">{stats.number_of_orders}</p>
             </CardDataStats>
             <CardDataStats title="Total Spend" total={`$${stats.total_spend}`} >
             <p>{stats.total_spend}</p>
             </CardDataStats>
             <CardDataStats title="Average Cost" total={`$${stats.average_cost_per_order}`} >
-            <p>{stats.average_cost_per_order}</p>
+            <p className="text-2xl font-bold text-[#00df9a] mb-6">{stats.average_cost_per_order}</p>
             </CardDataStats>
             <CardDataStats title="Delivered Orders" total={`${stats.delivered}`} >
             <p>{stats.delivered}</p>

@@ -9,6 +9,8 @@ const PastOrders = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [ordersPerPage] = useState(5);
   const [filterStatus, setFilterStatus] = useState('');
+  // Define the options for the dropdown
+  const statusOptions = ['', "Delivered", "Pending", "InTransit"];
   const [rating, setRating] = useState(0);
   const [comments, setComments] = useState('');
 
@@ -32,9 +34,16 @@ const PastOrders = () => {
     fetchOrders();
   }, []);
 
-  const handleFilterChange = (e) => {
-    setFilterStatus(e.target.value);
+  
+
+  const handleFilterChange = (event) => {
+    const filteredOrders = filterStatus === "All"
+    ? pastOrders
+    : pastOrders.filter(order => order.status === filterStatus);
+    setFilterStatus(event.target.value);
   };
+
+  
 
   const submitReview = async (order) => {
     // Assuming `rating` and `comments` are state variables holding current user input.
@@ -68,6 +77,7 @@ const PastOrders = () => {
 };
 
 
+
   // Get current orders
   const indexOfLastOrder = currentPage * ordersPerPage;
   const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
@@ -79,7 +89,15 @@ const PastOrders = () => {
       <div className="mt-24">
         <div className="container mx-auto p-4">
           <h1 className="text-3xl font-bold mb-8 text-left text-[#00df9a]  rounded-lg">Past Orders</h1>
-          <input type="text" placeholder="Filter by Status" value={filterStatus} onChange={handleFilterChange} className="input mb-4" />
+          <select onChange={handleFilterChange} value={filterStatus} className="mb-4 form-select">
+          <option value="" disabled>Filter by Status</option>
+          {statusOptions.map((status) => (
+            <option key={status} value={status}>
+              {status}
+            </option>
+          ))}
+        </select>
+
           {error && <p className="text-red-500 text-center">{error}</p>}
           {!error && currentOrders.filter(order => order.status.includes(filterStatus)).map((order, index) => (
             <div key={index} className="w-full mx-auto mb-6 bg-gray-100 rounded-lg shadow-md p-8 text-black">
