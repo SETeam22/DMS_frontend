@@ -9,13 +9,17 @@ const mapStyles = {
 };
 const bloomingtonLocation = { lat: 39.1653, lng: -86.5264 }; // Coordinates for Bloomington
 const newYorkLocation = { lat: 40.7128, lng: -74.0060 }; // Coordinates for New York
-
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+  });
+};
  // Default location, update accordingly
 
 const TrackOrder = () => {
   const [order, setOrder] = useState(null);
   const [orderId, setOrderId] = useState("");
-
+  
   const handleSearch = async () => {
     // Example fetch call, replace with your actual API endpoint
     const response = await fetch(`http://localhost:3000/api/orders/${orderId}`);

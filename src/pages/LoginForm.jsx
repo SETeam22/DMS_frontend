@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { GoogleLogin } from '@react-oauth/google';
 import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
-
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from '../helper/firebaseConfig';
 
 
 const LoginForm = () => {
@@ -71,10 +72,48 @@ const LoginForm = () => {
   };
   
 
-  // const handleGoogleRegister = () => {
-  //   // Placeholder for Google OAuth integration
-  //   console.log('Register with Google');
-  // };
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      // Attempt to sign in with Google
+      const result = await signInWithPopup(auth, provider);
+      
+      // Access the user's Google access token if needed (not typically used for backend calls directly)
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;  // This might be unnecessary unless you need it for accessing Google APIs
+
+      // Extract user details
+      const user = result.user;
+      const userData = {
+          username: user.displayName,
+          email: user.email,
+          profilePicture: user.photoURL
+      };
+      console.log(userData);
+      // Send user data to your backend
+      const response = await fetch('http://localhost:3000/api/auth/google', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(userData)
+      });
+      console.log(response);
+
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Login successful:', data);
+      localStorage.setItem('authToken', data.token);  // Assuming the token is named 'token' in the response
+      navigate('/service');
+      // Redirect the user or clear the form here depending on your application flow
+  } catch (error) {
+      // Handle errors from signInWithPopup or the fetch operation
+      console.error('Authentication or network error:', error);
+      alert('Authentication failed. Please try again.');
+  }
+  };
 
   return (
     
@@ -123,16 +162,13 @@ const LoginForm = () => {
             Login with Google
           </button> */}
 
-          <div className="google-login mt-4">
-          <GoogleLogin
-                onSuccess={credentialResponse => {
-                  console.log(credentialResponse);
-                }}
-                onError={() => {
-                  console.log('Login Failed');
-                }}
-              />
-          </div>
+         {/* Google Sign-In Button */}
+         <button onClick={handleGoogleSignIn} className=" rounded-xl text-black py-2 hover:scale-105 duration-300 mt-4 w-full">
+            Sign in with Google
+          </button>
+
+          {/* Additional elements from your original form */}
+  
 
           {/* <div className="mt-5 text-xs border-b border-[#002D74] py-4 text-[#00df9a]">
             <a href="#">Forgot your password?Click here</a>
