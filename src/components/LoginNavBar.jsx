@@ -20,6 +20,12 @@ const LoginNavBar = () => {
       <Link to="/service">
           <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Home</li>
         </Link>
+        <Link to="/service">
+          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Services</li>
+        </Link>
+        <Link to="/cart">
+          <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Place Order</li>
+        </Link>
         <Link to="/track-orders">
           <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Track Orders</li>
         </Link>
@@ -48,8 +54,9 @@ const LoginNavBar = () => {
           DeliverEase
         </Link>
         <ul className={`lg:flex hidden gap-8 items-center font-normal ${click ? 'hidden' : ''}`}>
+
           <Link to="/service" className={navLinkClass}>Home</Link>
-          
+
           <Link to="/track-orders" className={navLinkClass}>Track Orders</Link>
           <Link to="/past-orders" className={navLinkClass}>Transactions</Link>
           

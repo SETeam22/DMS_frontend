@@ -154,11 +154,18 @@ const UserProfile = () => {
             </CardDataStats>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-lg mt-6 w-full max-w-2xl">
-             <h2 className="text-2xl font-bold mb-4 ">Recent Order </h2>
-             <p><strong>Order ID:</strong> {stats.last_order.id}</p>
-             <p><strong>Status:</strong> {stats.last_order.status}</p>
-            <p><strong>Price:</strong> {stats.last_order.total}</p>
-          </div>
+  <h2 className="text-2xl font-bold mb-4 ">Recent Order </h2>
+  {stats.last_order ? (
+    <>
+      <p><strong>Order ID:</strong> {stats.last_order.id}</p>
+      <p><strong>Status:</strong> {stats.last_order.status}</p>
+      <p><strong>Price:</strong> {stats.last_order.total}</p>
+    </>
+  ) : (
+    <p>No recent orders to display.</p>
+  )}
+</div>
+
 
           <div className="mt-8">
             <BarChart data={chartData} />

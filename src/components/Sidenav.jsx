@@ -11,6 +11,8 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import StoreIcon from "@mui/icons-material/Store";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import ChatIcon from '@mui/icons-material/Chat';
+import ReviewsIcon from '@mui/icons-material/Reviews';
 
 const Sidenav = () => {
   
@@ -40,7 +42,7 @@ const Sidenav = () => {
               <span className="text-sm font-semibold text-gray-600 ml-2.5">Drivers</span>
             </li>
           </Link>
-          <Link to="/service" style={{ textDecoration: "none" }}>
+          <Link to="/Adminservice" style={{ textDecoration: "none" }}>
             <li className='flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2'>
               <StoreIcon className="text-base text-[#00df9a]" />
               <span className="text-sm font-semibold text-gray-600 ml-2.5">Services</span>
@@ -53,14 +55,24 @@ const Sidenav = () => {
             <span className="text-sm font-semibold text-gray-600 ml-2.5">Orders</span>
           </li>
           </Link>
+          <Link to="/chat" style={{ textDecoration: "none" }}>
           <li className='flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2'>
-            <LocalShippingIcon className="text-base text-[#00df9a]" />
-            <span className="text-sm font-semibold text-gray-600 ml-2.5">Delivery</span>
-          </li>          
+            <ChatIcon className="text-base text-[#00df9a]" />
+            <span className="text-sm font-semibold text-gray-600 ml-2.5">Chat</span>
+          </li>  
+          </Link>
+          <Link to="/reviews" style={{ textDecoration: "none" }}>
+          <li className='flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2'>
+            <ReviewsIcon className="text-base text-[#00df9a]" />
+            <span className="text-sm font-semibold text-gray-600 ml-2.5">Reviews</span>
+          </li> 
+          </Link>   
+          <Link>        
           <li className='flex items-center px-1.25 py-1.25 cursor-pointer hover:bg-purple-100 mb-2'>
             <ExitToAppIcon className="text-base text-[#00df9a]" />
             <span className="text-sm font-semibold text-gray-600 ml-2.5">Logout</span>
           </li>
+          </Link>
         </ul>
       </div>
       
