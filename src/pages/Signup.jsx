@@ -112,9 +112,29 @@ const Signup = () => {
       console.log(userData)
       
       if (response.ok) {
+
+        const otpResponse = await fetch('http://localhost:3000/api/auth/sendotp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email }) // Pass only email to sendOTP API
+        });
+    
+        if (otpResponse.ok) {
+          // const otpData = await otpResponse.json();
+          // const { otp } = otpData;
+          // sessionStorage.setItem('otp', otp);
   
-        navigate('/service'); // Navigate to verification page
+          //  verification page
+          navigate('/verification', { state: { email, username: name } });
+        } else {
+          console.error('OTP sending failed');
+          // Handle OTP sending failure
+        }
       }
+
+        //navigate('/service'); // Navigate to verification page
       
     } catch (error) {
       console.error('Registration failed:', error);

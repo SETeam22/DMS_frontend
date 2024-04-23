@@ -7,7 +7,9 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const token = queryParams.get('token');
+  //const token = queryParams.get('token');
+  const { username } = location.state || {}; // Access the username from location state
+
 
   const handleResetSubmit = async (e) => {
     e.preventDefault();
@@ -16,26 +18,25 @@ const ResetPassword = () => {
       return;
     }
     try {
-        const response = await fetch('http://localhost:3000/api/reset-password', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ token, newPassword })  // Send the token and new password to your backend
-        });
+      const response = await fetch('http://localhost:3000/api/auth/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, newPassword }) // Send the username and new password to your backend
+      });
 
-        if (response.ok) {
-            console.log('Password reset successfully');
-            // Handle successful password reset (e.g., redirect to login page)
-        } else {
-            throw new Error('Failed to reset password');
-        }
+      if (response.ok) {
+        console.log('Password reset successfully');
+        console.log('Resetting password for username:', username);
+        navigate('/login');
+        // Handle successful password reset (e.g., redirect to login page)
+      } else {
+        throw new Error('Failed to reset password');
+      }
     } catch (error) {
-        console.error('Error:', error);
+      console.error(error);
     }
-    console.log('Resetting password for token:', token);
-    // Navigate to login or success page
-    navigate('/login');
   };
 
   return (

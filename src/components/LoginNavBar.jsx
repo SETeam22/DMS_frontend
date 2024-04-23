@@ -39,7 +39,7 @@ const LoginNavBar = () => {
         <Link to="/user-profile">
           <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>User Profile</li>
         </Link>
-        <Link to="/logout">
+        <Link to="/">
           <li className='my-4 py-4 border-b border-slate-800 hover:bg-slate-800 hover:rounded'>Logout</li>
         </Link>
       </ul>
